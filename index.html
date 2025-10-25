@@ -252,7 +252,8 @@
       const formStatus = document.getElementById("formStatus");
       formStatus.textContent = "Sending...";
 
-      const response = await fetch("https://script.google.com/macros/s/AKfycbz-YgCI5vnj698VBR2xpPgXs4pxceJsl_uxHRp8xeM_3fLZ3hvogelwfNMeYuJSTR1MHg/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzVrseRGbDYFdo0_E_G9a7epoLX0DMdl1G1QJy7dgZmEvzWC80sl8StDBH_2hOBSIu6-A/exec", {
+        
         method: "POST",
         body: new FormData(form)
       });

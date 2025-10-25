@@ -15,50 +15,31 @@
       line-height: 1.6;
     }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-    /* Header */
     header {
       background: #fff;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
     }
-    .header-content {
-      display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;
-    }
-    .logo {
-      display: flex; align-items: center;
-      font-size: 1.8rem; font-weight: bold; color: #1e3a5f;
-    }
+    .header-content { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+    .logo { display: flex; align-items: center; font-size: 1.8rem; font-weight: bold; color: #1e3a5f; }
     .logo img { width: 45px; height: 45px; margin-right: 12px; object-fit: contain; }
-    .contact-info {
-      display: flex; align-items: center; gap: 2rem; font-size: 0.95rem;
-    }
+    .contact-info { display: flex; align-items: center; gap: 2rem; font-size: 0.95rem; }
     .contact-item { display: flex; align-items: center; gap: 0.5rem; color: #666; }
-    .phone-number {
-      color: #1e3a5f; font-weight: 600; text-decoration: none;
-    }
+    .phone-number { color: #1e3a5f; font-weight: 600; text-decoration: none; }
     .phone-number:hover { color: #3182ce; }
-
-    /* Hero */
     .hero {
       background: linear-gradient(135deg, #1e3a5f, #2c5282);
       color: white; text-align: center; padding: 4rem 0;
     }
     .hero h1 { font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; }
     .hero .subtitle { font-size: 1.5rem; color: #e2e8f0; margin-bottom: 1rem; }
-    .hero .description {
-      font-size: 1.2rem; max-width: 600px; margin: 0 auto 2.5rem; opacity: 0.9;
-    }
+    .hero .description { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2.5rem; opacity: 0.9; }
     .cta-button {
       display: inline-block; background: #3182ce; color: white;
       padding: 1rem 2.5rem; border-radius: 8px; font-weight: 600; font-size: 1.1rem;
       text-decoration: none; transition: 0.3s ease; box-shadow: 0 4px 15px rgba(49,130,206,0.3);
     }
     .cta-button:hover { background: #2c5282; transform: translateY(-2px); }
-
-    /* Services */
     .services { background: #fff; padding: 5rem 0; }
     .section-header { text-align: center; margin-bottom: 4rem; }
     .section-title { font-size: 2.5rem; color: #1a202c; margin-bottom: 1rem; font-weight: 700; }
@@ -73,8 +54,6 @@
     .service-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); background: white; }
     .service-card h3 { color: #1e3a5f; font-size: 1.4rem; margin-bottom: 1rem; font-weight: 600; }
     .service-card p { color: #666; line-height: 1.6; }
-
-    /* Contact */
     .contact { background: #f8f9fa; text-align: center; padding: 4rem 0; }
     .contact h2 { font-size: 2.2rem; color: #1a202c; font-weight: 700; margin-bottom: 1rem; }
     .contact p { font-size: 1.1rem; color: #666; max-width: 500px; margin: 0 auto 2.5rem; }
@@ -88,12 +67,8 @@
     .contact-card h3 { color: #1e3a5f; font-size: 1.2rem; margin-bottom: 1rem; }
     .contact-card a { color: #3182ce; text-decoration: none; font-weight: 500; }
     .contact-card a:hover { color: #1e3a5f; }
-
-    /* Footer */
     footer { background: #1a202c; color: white; text-align: center; padding: 2rem 0; }
     footer p { opacity: 0.8; font-size: 0.95rem; }
-
-    /* Responsive */
     @media (max-width: 768px) {
       .header-content { flex-direction: column; text-align: center; gap: 1rem; }
       .contact-info { flex-direction: column; gap: 0.5rem; }
@@ -104,9 +79,7 @@
     }
   </style>
 </head>
-
 <body>
-  <!-- Header -->
   <header>
     <div class="container">
       <div class="header-content">
@@ -122,7 +95,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <h1>Texan Support & Solutions</h1>
@@ -132,39 +104,11 @@
     </div>
   </section>
 
-  <!-- Services -->
-  <section class="services">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Our Services</h2>
-        <p class="section-subtitle">Expert technology solutions for homes and small businesses</p>
-      </div>
-      <div class="services-grid">
-        <div class="service-card"><h3>Computer Repair & Optimization</h3><p>Full diagnostics, hardware replacement, OS repair, and performance tuning to keep your system running like new.</p></div>
-        <div class="service-card"><h3>Network & Wi-Fi Setup</h3><p>Secure, high-speed Wi-Fi installation, troubleshooting, and optimization for reliable coverage everywhere you need it.</p></div>
-        <div class="service-card"><h3>Cybersecurity & Virus Protection</h3><p>Malware removal, system hardening, and proactive monitoring to safeguard your data and privacy.</p></div>
-        <div class="service-card"><h3>Smart Device & Mobile Support</h3><p>Setup, sync, and troubleshooting for smartphones, tablets, and smart-home devices across platforms.</p></div>
-        <div class="service-card"><h3>Business IT Solutions</h3><p>Custom technology support for small businesses: servers, backups, cloud systems, and remote management.</p></div>
-        <div class="service-card"><h3>On-Site Service Calls</h3><p>Local, same-day support available across Eastland, Cisco, Ranger, and surrounding Texas communities.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact -->
   <section id="contact" class="contact">
     <div class="container">
       <h2>Need Help Fast?</h2>
       <p>Contact Texan Support & Solutions today for expert IT service that gets you back up and running quickly.</p>
 
-      <div class="contact-details">
-        <div class="contact-card"><h3>Service Area</h3><p>Eastland, TX</p><p>& Surrounding Communities</p></div>
-        <div class="contact-card"><h3>Call Us</h3><p><a href="tel:+12544420796">(254) 442-0796</a></p></div>
-        <div class="contact-card"><h3>Visit Online</h3><p><a href="https://solutionstx.com">solutionstx.com</a></p></div>
-      </div>
-
-      <a href="tel:+12544420796" class="cta-button">Call Now for Support</a>
-
-      <!-- Email Form -->
       <form id="contactForm" class="contact-form" style="max-width:500px;margin:2rem auto;text-align:left;">
         <label for="name">Name</label><br>
         <input type="text" id="name" name="name" required style="width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;"><br>
@@ -178,42 +122,13 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <p>&copy; 2025 Texan Support & Solutions. Professional IT Services in Eastland, TX.</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script>
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Fade-in animation
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.service-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(card);
-    });
-
-    // Toast notification
     const toast = document.createElement('div');
     toast.style.position = 'fixed';
     toast.style.bottom = '25px';
@@ -241,7 +156,6 @@
       }, 3000);
     }
 
-    // Contact Form Handler
     document.getElementById("contactForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
@@ -249,7 +163,7 @@
       formStatus.textContent = "Sending...";
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbxkRLs-c4jH-4WmrNTwz83z3jT9xoROg41XHm1EGlu7VYqvpF3iDtvE0PA9BW6gGf61PQ/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycb6MZIWJ7E7C0qiBUtXflSoY21cgJWQEdMzbUa8pTt_ToD0UhSRHcN_42p1H0BhUp67/exec", {
           method: "POST",
           body: new FormData(form)
         });
@@ -262,7 +176,7 @@
           showToast("❌ Error sending message. Try again.", "#b91c1c");
           formStatus.textContent = "";
         }
-      } catch (err) {
+      } catch {
         showToast("⚠️ Network error. Please retry.", "#b91c1c");
         formStatus.textContent = "";
       }

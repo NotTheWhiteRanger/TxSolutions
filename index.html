@@ -345,10 +345,10 @@
       btn.disabled = true;
 
       try {
-        const resp = await fetch("https://script.google.com/macros/s/AKfycbz-YgCI5vnj698VBR2xpPgXs4pxceJsl_uxHRp8xeM_3fLZ3hvogelwfNMeYuJSTR1MHg/exec", {
-          method: "POST",
-          body: new FormData(form)
-        });
+        const resp = await fetch("https://script.google.com/macros/s/AKfycbyyMhkP-8n0DDKSdhcr18cMIo_MvOCYnbeVbHNm8fa3RZv-K6KF3HZL8czLbdN4JayP0g/exec", {
+  method: "POST",
+  body: new FormData(form)
+});
 
         if (resp.ok) {
           status.textContent = "Message sent. We’ll get back shortly.";

@@ -71,12 +71,12 @@
         <p class="section-subtitle">Expert technology solutions for homes and small businesses</p>
       </div>
       <div class="services-grid">
-        <div class="service-card"><h3>Computer Repair & Optimization</h3><p>Full diagnostics, hardware replacement, OS repair, and performance tuning.</p></div>
-        <div class="service-card"><h3>Network & Wi-Fi Setup</h3><p>Secure installs, troubleshooting, and coverage optimization.</p></div>
-        <div class="service-card"><h3>Cybersecurity & Virus Protection</h3><p>Malware removal, hardening, and proactive monitoring.</p></div>
-        <div class="service-card"><h3>Smart Device & Mobile Support</h3><p>Setup, sync, and smart-home integrations.</p></div>
-        <div class="service-card"><h3>Business IT Solutions</h3><p>Servers, backups, cloud, and remote management.</p></div>
-        <div class="service-card"><h3>On-Site Service Calls</h3><p>Same-day local support across Eastland & nearby.</p></div>
+        <div class="service-card"><h3>Computer Repair & Optimization</h3><p>Diagnostics, hardware repair, OS tune-ups, and performance optimization.</p></div>
+        <div class="service-card"><h3>Network & Wi-Fi Setup</h3><p>Reliable, secure Wi-Fi installation and troubleshooting.</p></div>
+        <div class="service-card"><h3>Cybersecurity & Virus Protection</h3><p>Comprehensive malware removal and threat prevention.</p></div>
+        <div class="service-card"><h3>Smart Device & Mobile Support</h3><p>Setup, sync, and support for all your devices.</p></div>
+        <div class="service-card"><h3>Business IT Solutions</h3><p>Servers, backups, cloud systems, and remote management.</p></div>
+        <div class="service-card"><h3>On-Site Service Calls</h3><p>Fast, friendly local service across Eastland and nearby areas.</p></div>
       </div>
     </div>
   </section>
@@ -95,6 +95,7 @@
         <textarea id="message" name="message" rows="5" required style="width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc;"></textarea><br>
         <button type="submit" class="cta-button">Send Message</button>
       </form>
+
       <p id="formStatus" style="margin-top:1rem;color:#1e3a5f;font-weight:600;text-align:center;"></p>
     </div>
   </section>
@@ -129,18 +130,37 @@
     document.body.appendChild(toast);
     function showToast(msg,color='#1e3a5f'){toast.textContent=msg;toast.style.background=color;toast.style.opacity='1';toast.style.transform='translateX(-50%)';setTimeout(()=>{toast.style.opacity='0';toast.style.transform='translateX(-50%) translateY(20px)';},3000);}
 
-    // Form handler
-    document.getElementById('contactForm').addEventListener('submit', async (e)=>{
+    // Contact form — no preflight
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const form=e.target; const status=document.getElementById('formStatus');
-      status.textContent='Sending...';
-      try{
-        const resp=await fetch("https://script.google.com/macros/s/AKfycb6MZlWJ7E7C0qiBUtXflSoY21cgJWQEdMzbUa8pTt_ToD0UhSRHcN_42p1H0BhUp67/exec",{
-          method:"POST", body:new FormData(form)
-        });
-        if(resp.ok){ showToast('✅ Message sent successfully!'); status.textContent=''; form.reset(); }
-        else{ showToast('❌ Error sending message. Try again.', '#b91c1c'); status.textContent=''; }
-      }catch{ showToast('⚠️ Network error. Please retry.', '#b91c1c'); status.textContent=''; }
+      const form = e.target;
+      const status = document.getElementById("formStatus");
+      status.textContent = "Sending...";
+
+      const data = new URLSearchParams(new FormData(form));
+
+      try {
+        const resp = await fetch(
+          "https://script.google.com/macros/s/AKfycb6MZlWJ7E7C0qiBUtXflSoY21cgJWQEdMzbUa8pTt_ToD0UhSRHcN_42p1H0BhUp67/exec",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+            body: data.toString()
+          }
+        );
+
+        if (resp.ok) {
+          showToast("✅ Message sent successfully!");
+          status.textContent = "";
+          form.reset();
+        } else {
+          showToast("❌ Error sending message. Try again.", "#b91c1c");
+          status.textContent = "";
+        }
+      } catch {
+        showToast("⚠️ Network error. Please retry.", "#b91c1c");
+        status.textContent = "";
+      }
     });
   </script>
 </body>

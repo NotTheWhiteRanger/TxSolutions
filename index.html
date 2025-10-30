@@ -8,12 +8,29 @@
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       color: #333;
-      background: #f8f9fa;
+      background-color: #f4f5f7;
       line-height: 1.6;
+      position: relative;
+      z-index: 0;
     }
+
+    /* ✅ Watermark Logo Background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://raw.githubusercontent.com/NotTheWhiteRanger/TxSolutions/main/Images/Logo.png')
+                  no-repeat center center;
+      background-size: 400px; /* adjust size */
+      opacity: 0.06; /* transparency level */
+      z-index: -1;
+      pointer-events: none;
+    }
+
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
     /* Header */
@@ -317,19 +334,15 @@
       observer.observe(card);
     });
 
-    // Contact Form Handler (enhanced)
+    // Contact Form Handler
     document.getElementById("contactForm").addEventListener("submit", async function(e) {
       e.preventDefault();
       const form = e.target;
       const status = document.getElementById("formStatus");
       const btn = document.getElementById("sendBtn");
 
-      // Honeypot: if filled, silently drop
-      if (form.company && form.company.value.trim() !== "") {
-        return;
-      }
+      if (form.company && form.company.value.trim() !== "") return;
 
-      // Basic validation
       const name = form.name.value.trim();
       const email = form.email.value.trim();
       const message = form.message.value.trim();
@@ -346,9 +359,9 @@
 
       try {
         const resp = await fetch("https://script.google.com/macros/s/AKfycbyyMhkP-8n0DDKSdhcr18cMIo_MvOCYnbeVbHNm8fa3RZv-K6KF3HZL8czLbdN4JayP0g/exec", {
-  method: "POST",
-  body: new FormData(form)
-});
+          method: "POST",
+          body: new FormData(form)
+        });
 
         if (resp.ok) {
           status.textContent = "Message sent. We’ll get back shortly.";

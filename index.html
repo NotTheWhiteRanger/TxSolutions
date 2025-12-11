@@ -533,9 +533,18 @@
         form.setAttribute('aria-busy', 'true');
 
         try{
-          const resp = await sendData(new FormData(form));
+          // Build FormData explicitly to ensure phone and preferred method are included
+          const fd = new FormData(form);
+          fd.set('phone', phone || '');
+          fd.set('preferred', preferred || 'email');
+          // Add a combined message field so servers/scripts that only include one field will still get the details
+          fd.set('fullMessage', `Preferred contact: ${preferred}\nPhone: ${phone}\n\nMessage:\n${message}`);
+
+          const resp = await sendData(fd);
           if (resp && resp.ok){
-            status.textContent = 'Message sent. We’ll get back shortly.';
+            // Reflect preferred contact back to user for clarity
+            const contactLine = (preferred === 'phone' && phone) ? `We’ll contact you by phone at ${phone}.` : `We’ll contact you by email at ${email}.`;
+            status.textContent = `Message sent. ${contactLine}`;
             status.className = 'status-ok';
             form.reset();
           } else {

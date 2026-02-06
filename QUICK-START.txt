@@ -68,7 +68,6 @@
 │  ✅ Trust & certifications section (5 badges)                          │
 │  ✅ Enhanced cybersecurity services (detailed list)                    │
 │  ✅ Security tips section (3 best practices)                           │
-│  ✅ Client testimonials (3 success stories)                            │
 │  ✅ Enhanced contact form (service dropdown)                           │
 │  ✅ Privacy policy page (complete)                                     │
 │  ✅ Terms of service page (complete)                                   │

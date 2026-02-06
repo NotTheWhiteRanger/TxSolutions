@@ -83,7 +83,7 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
    ========================================================================== */
 .hero {
   background: linear-gradient(135deg, var(--brand), var(--accent));
-  color: white; text-align: center; padding: 6rem 0;
+  color: white; text-align: center; padding: 4rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -123,7 +123,7 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
 .hero .description {
   font-size: 1.2rem; 
   max-width: 600px; 
-  margin: 0 auto 2.5rem; 
+  margin: 0 auto 2rem; 
   opacity: 0.95;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
@@ -247,7 +247,7 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
    ========================================================================== */
 .security-badges {
   background: var(--surface);
-  padding: 3rem 0;
+  padding: 2.5rem 0;
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -286,9 +286,9 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
 /* ==========================================================================
    Services Section
    ========================================================================== */
-.services { background: var(--surface); padding: 5rem 0; }
+.services { background: var(--surface); padding: 3.5rem 0; }
 
-.section-header { text-align: center; margin-bottom: 4rem; }
+.section-header { text-align: center; margin-bottom: 2.5rem; }
 .section-title { font-size: 2.5rem; color: #1a202c; margin-bottom: 1rem; font-weight: 700; }
 .section-subtitle { color: #666; font-size: 1.2rem; max-width: 600px; margin: 0 auto; }
 
@@ -320,14 +320,14 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
    ========================================================================== */
 .security-tips {
   background: var(--bg);
-  padding: 5rem 0;
+  padding: 3.5rem 0;
 }
 
 .tips-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .tip-card {
@@ -355,7 +355,7 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
 /* ==========================================================================
    Contact Section
    ========================================================================== */
-.contact { background: var(--bg); text-align: center; padding: 4rem 0; }
+.contact { background: var(--bg); text-align: center; padding: 3rem 0; }
 .contact h2 { font-size: 2.2rem; color: #1a202c; font-weight: 700; margin-bottom: 1rem; }
 .contact p { font-size: 1.1rem; color: #666; max-width: 500px; margin: 0 auto 2.5rem; }
 
@@ -515,7 +515,7 @@ footer p { opacity: 0.95; font-size: 0.95rem; }
    ========================================================================== */
 .stats-section {
   background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
-  padding: 4rem 0;
+  padding: 3rem 0;
   color: white;
 }
 
@@ -552,7 +552,7 @@ footer p { opacity: 0.95; font-size: 0.95rem; }
    Password Strength Checker Tool
    ========================================================================== */
 .password-checker {
-  padding: 5rem 0;
+  padding: 3.5rem 0;
   background: var(--bg);
 }
 
@@ -561,7 +561,7 @@ footer p { opacity: 0.95; font-size: 0.95rem; }
   margin: 0 auto;
   background: var(--surface);
   border-radius: 16px;
-  padding: 3rem;
+  padding: 2.5rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   border: 1px solid #e2e8f0;
 }

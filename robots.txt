@@ -1,0 +1,14 @@
+# robots.txt for solutionstx.com
+# Professional IT & Cybersecurity Services
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.pdf$
+
+# Sitemap location
+Sitemap: https://solutionstx.com/sitemap.xml
+
+# Crawl delay for politeness
+Crawl-delay: 1

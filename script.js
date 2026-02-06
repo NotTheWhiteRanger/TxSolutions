@@ -130,7 +130,7 @@ document.querySelectorAll('.service-card, .tip-card, .testimonial-card, .badge-i
     const email = form.email.value.trim();
     const phone = form.phone ? form.phone.value.trim() : '';
     const preferred = form.preferred ? form.preferred.value : 'email';
-    const serviceInterest = form.service_interest ? form.service_interest.value : form.service ? form.service.value : '';
+    const serviceInterest = form.service_interest ? form.service_interest.value : '';
     const message = form.message.value.trim();
 
     // Validation

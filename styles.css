@@ -54,6 +54,10 @@ header {
   display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;
 }
 
+.header-logo-section {
+  display: flex; align-items: center; gap: 1rem;
+}
+
 .logo {
   display: flex; align-items: center;
   font-size: 1.8rem; font-weight: bold; color: #1e3a5f;
@@ -61,7 +65,7 @@ header {
 .logo img { width: 45px; height: 45px; margin-right: 12px; object-fit: contain; }
 
 .contact-info {
-  display: flex; align-items: center; gap: 2rem; font-size: 0.95rem;
+  display: flex; flex-direction: column; font-size: 0.95rem;
 }
 .contact-item { display: flex; align-items: center; gap: 0.5rem; color: #666; }
 .phone-number { color: #1e3a5f; font-weight: 600; text-decoration: none; }
@@ -455,8 +459,12 @@ footer p { opacity: 0.95; font-size: 0.95rem; }
 }
 
 @media (max-width: 768px) {
-  .header-content { flex-direction: column; text-align: center; gap: 1rem; }
-  .contact-info { flex-direction: column; gap: 0.5rem; }
+  .header-content { flex-direction: column; text-align: center; gap: 0.5rem; padding: 0.5rem 0; }
+  .header-logo-section { flex-direction: column; gap: 0.5rem; }
+  .contact-info { flex-direction: column; gap: 0.25rem; font-size: 0.85rem; }
+  .contact-subtext { display: none; }
+  .logo { font-size: 1.2rem; }
+  .logo img { width: 35px; height: 35px; margin-right: 8px; }
   .hero h1 { font-size: 2.2rem; }
   .hero .subtitle { font-size: 1.2rem; }
   .hero .description { font-size: 1rem; padding: 0 1rem; }

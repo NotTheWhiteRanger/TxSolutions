@@ -196,3 +196,186 @@ document.querySelectorAll('.service-card, .tip-card, .badge-item').forEach(card 
     }
   });
 })();
+
+// Animated Statistics Counter
+(function() {
+  const animateCounter = (element) => {
+    const target = parseInt(element.getAttribute('data-target'));
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const increment = target / steps;
+    let current = 0;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        element.textContent = target;
+        clearInterval(timer);
+      } else {
+        element.textContent = Math.floor(current);
+      }
+    }, duration / steps);
+  };
+
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const statNumbers = entry.target.querySelectorAll('.stat-number');
+        statNumbers.forEach(stat => animateCounter(stat));
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) {
+    statObserver.observe(statsSection);
+  }
+})();
+
+// Password Strength Checker
+(function() {
+  const passwordInput = document.getElementById('passwordInput');
+  const togglePassword = document.getElementById('togglePassword');
+  const strengthFill = document.getElementById('strengthFill');
+  const strengthText = document.getElementById('strengthText');
+
+  if (!passwordInput || !strengthFill || !strengthText) return;
+
+  // Toggle password visibility
+  togglePassword?.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  // Check password strength
+  function checkPasswordStrength(password) {
+    if (!password) {
+      return { strength: 'none', score: 0, text: 'Enter a password to check its strength' };
+    }
+
+    let score = 0;
+    const checks = {
+      length: password.length >= 12,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      numbers: /\d/.test(password),
+      symbols: /[^a-zA-Z0-9]/.test(password),
+      longLength: password.length >= 16
+    };
+
+    // Calculate score
+    if (checks.length) score += 2;
+    if (checks.longLength) score += 1;
+    if (checks.lowercase) score += 1;
+    if (checks.uppercase) score += 1;
+    if (checks.numbers) score += 1;
+    if (checks.symbols) score += 2;
+
+    // Determine strength
+    if (score <= 2) {
+      return { strength: 'weak', score, text: '❌ Weak - Your password is easily crackable' };
+    } else if (score <= 4) {
+      return { strength: 'fair', score, text: '⚠️ Fair - Could be stronger' };
+    } else if (score <= 6) {
+      return { strength: 'good', score, text: '✓ Good - Decent password' };
+    } else {
+      return { strength: 'strong', score, text: '✓✓ Strong - Excellent password!' };
+    }
+  }
+
+  passwordInput.addEventListener('input', (e) => {
+    const password = e.target.value;
+    const result = checkPasswordStrength(password);
+
+    // Update UI
+    strengthFill.className = `strength-fill ${result.strength}`;
+    strengthText.className = `strength-text ${result.strength}`;
+    strengthText.textContent = result.text;
+  });
+})();
+
+// Scroll Progress Indicator
+(function() {
+  const progressBar = document.getElementById('scrollProgress');
+  if (!progressBar) return;
+
+  window.addEventListener('scroll', () => {
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.scrollY / windowHeight) * 100;
+    progressBar.style.width = `${scrolled}%`;
+  });
+})();
+
+// Floating Action Button (FAB)
+(function() {
+  const fabButton = document.getElementById('fabButton');
+  const fabMenu = document.getElementById('fabMenu');
+  
+  if (!fabButton || !fabMenu) return;
+
+  let isMenuOpen = false;
+
+  fabButton.addEventListener('click', () => {
+    isMenuOpen = !isMenuOpen;
+    
+    if (isMenuOpen) {
+      fabMenu.removeAttribute('hidden');
+      setTimeout(() => {
+        fabMenu.classList.add('show');
+        fabButton.classList.add('active');
+      }, 10);
+    } else {
+      fabMenu.classList.remove('show');
+      fabButton.classList.remove('active');
+      setTimeout(() => {
+        fabMenu.setAttribute('hidden', '');
+      }, 300);
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (isMenuOpen && !fabButton.contains(e.target) && !fabMenu.contains(e.target)) {
+      fabMenu.classList.remove('show');
+      fabButton.classList.remove('active');
+      isMenuOpen = false;
+      setTimeout(() => {
+        fabMenu.setAttribute('hidden', '');
+      }, 300);
+    }
+  });
+
+  // Close menu when clicking a menu item
+  fabMenu.querySelectorAll('.fab-menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      fabMenu.classList.remove('show');
+      fabButton.classList.remove('active');
+      isMenuOpen = false;
+      setTimeout(() => {
+        fabMenu.setAttribute('hidden', '');
+      }, 300);
+    });
+  });
+})();
+
+// Show FAB after scrolling down
+(function() {
+  const fabButton = document.getElementById('fabButton');
+  if (!fabButton) return;
+
+  // Hide initially
+  fabButton.style.opacity = '0';
+  fabButton.style.pointerEvents = 'none';
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      fabButton.style.opacity = '1';
+      fabButton.style.pointerEvents = 'all';
+    } else {
+      fabButton.style.opacity = '0';
+      fabButton.style.pointerEvents = 'none';
+    }
+  });
+})();

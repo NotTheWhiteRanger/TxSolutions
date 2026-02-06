@@ -268,6 +268,63 @@
     </div>
   </section>
 
+  <!-- Stats Counter -->
+  <section class="stats-section" aria-label="Company Statistics">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-target="10">0</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="500">0</div>
+          <div class="stat-label">Clients Served</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="99">0</div>
+          <div class="stat-label">% Satisfaction Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="24">0</div>
+          <div class="stat-label">Hour Response Time</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Password Checker Tool -->
+  <section class="password-checker" aria-labelledby="password-checker-title">
+    <div class="container">
+      <div class="tool-card">
+        <h2 id="password-checker-title" class="section-title" style="text-align: center; margin-bottom: 1rem;">🔒 Check Your Password Strength</h2>
+        <p style="text-align: center; color: var(--muted); margin-bottom: 2rem;">See how secure your password is in real-time</p>
+        
+        <div class="password-input-wrapper">
+          <input type="password" id="passwordInput" class="password-input" placeholder="Enter a password to test..." aria-label="Password to test">
+          <button type="button" id="togglePassword" class="toggle-password" aria-label="Toggle password visibility">👁️</button>
+        </div>
+        
+        <div id="passwordStrength" class="password-strength-indicator" role="status" aria-live="polite">
+          <div class="strength-bar">
+            <div class="strength-fill" id="strengthFill"></div>
+          </div>
+          <p id="strengthText" class="strength-text">Enter a password to check its strength</p>
+        </div>
+        
+        <div class="password-tips">
+          <h4 style="margin-bottom: 0.75rem; color: var(--brand);">Password Best Practices:</h4>
+          <ul style="color: #666; line-height: 1.8;">
+            <li>Use at least 12 characters</li>
+            <li>Mix uppercase, lowercase, numbers, and symbols</li>
+            <li>Avoid common words and personal information</li>
+            <li>Use a unique password for each account</li>
+            <li>Consider using a password manager</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Security Tips -->
   <section class="security-tips" aria-labelledby="tips-title">
     <div class="container">
@@ -417,6 +474,30 @@
       </div>
     </div>
   </footer>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scrollProgress" class="scroll-progress"></div>
+
+  <!-- Floating Action Button -->
+  <button id="fabButton" class="fab-button" aria-label="Quick contact options">
+    <span class="fab-icon">💬</span>
+  </button>
+
+  <!-- FAB Menu -->
+  <div id="fabMenu" class="fab-menu" hidden>
+    <a href="tel:+12544420796" class="fab-menu-item" aria-label="Call us">
+      <span class="fab-menu-icon">📞</span>
+      <span class="fab-menu-text">Call Now</span>
+    </a>
+    <a href="#contact" class="fab-menu-item" aria-label="Send message">
+      <span class="fab-menu-icon">✉️</span>
+      <span class="fab-menu-text">Email Us</span>
+    </a>
+    <a href="#services" class="fab-menu-item" aria-label="View services">
+      <span class="fab-menu-icon">🛠️</span>
+      <span class="fab-menu-text">Services</span>
+    </a>
+  </div>
 
   <!-- Scripts -->
   <script src="script.js"></script>

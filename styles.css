@@ -136,18 +136,21 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
 .cta-button:focus{ outline:3px solid rgba(49,130,206,.25); outline-offset:3px; }
 
 .cta-emergency {
-  background: #dc2626;
+  background: rgba(255, 255, 255, 0.95);
+  color: #dc2626;
   border: 2px solid #fff;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-  animation: pulse 2s infinite;
-}
-.cta-emergency:hover {
-  background: #b91c1c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+  padding: 0.65rem 1.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3); }
-  50% { box-shadow: 0 4px 25px rgba(220, 38, 38, 0.5); }
+.cta-emergency:hover {
+  background: #fff;
+  color: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 /* ==========================================================================
@@ -156,9 +159,69 @@ nav.primary { display:flex; align-items:center; gap:1rem; }
 .emergency-banner {
   background: linear-gradient(135deg, #dc2626, #b91c1c);
   color: white;
-  padding: 1.5rem 0;
-  text-align: center;
-  border-bottom: 3px solid #991b1b;
+  padding: 1rem 0;
+  border-bottom: 2px solid #991b1b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.emergency-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.emergency-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.emergency-icon {
+  font-size: 1.25rem;
+  animation: emergency-pulse 2s ease-in-out infinite;
+}
+
+@keyframes emergency-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+.emergency-label {
+  letter-spacing: 0.5px;
+}
+
+.emergency-action {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.emergency-phone {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.emergency-phone:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
 }
 
 .emergency-banner h3 {
@@ -403,6 +466,39 @@ footer p { opacity: 0.95; font-size: 0.95rem; }
   .form-grid{ grid-template-columns:1fr; }
   .badges-grid { grid-template-columns: 1fr; }
   .tips-grid { grid-template-columns: 1fr; }
+  
+  /* Emergency Banner Mobile Styles */
+  .emergency-banner {
+    padding: 0.75rem 0;
+  }
+  
+  .emergency-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .emergency-text {
+    font-size: 0.95rem;
+    justify-content: center;
+  }
+  
+  .emergency-action {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  
+  .emergency-phone {
+    font-size: 1.05rem;
+  }
+  
+  .cta-emergency {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.95rem;
+    width: auto;
+    min-width: 200px;
+  }
 }
 
 /* ==========================================================================

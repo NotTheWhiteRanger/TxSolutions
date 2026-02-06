@@ -262,23 +262,65 @@ document.querySelectorAll('.service-card, .tip-card, .badge-item').forEach(card 
       uppercase: /[A-Z]/.test(password),
       numbers: /\d/.test(password),
       symbols: /[^a-zA-Z0-9]/.test(password),
-      longLength: password.length >= 16
+      longLength: password.length >= 16,
+      veryLongLength: password.length >= 20
     };
+
+    // Check for common weak patterns
+    const commonPatterns = [
+      /password/i,
+      /123456/,
+      /qwerty/i,
+      /abc/i,
+      /111/,
+      /000/,
+      /admin/i,
+      /letmein/i,
+      /welcome/i,
+      /monkey/i,
+      /dragon/i,
+      /master/i,
+      /sunshine/i,
+      /princess/i,
+      /login/i,
+      /passw0rd/i,
+      /pass/i,
+      /\b\d{4,}\b/, // 4+ consecutive digits
+      /([a-z])\1{2,}/i, // 3+ repeated characters (aaa, 111, etc)
+    ];
+
+    const hasWeakPattern = commonPatterns.some(pattern => pattern.test(password));
 
     // Calculate score
     if (checks.length) score += 2;
-    if (checks.longLength) score += 1;
+    if (checks.longLength) score += 2;
+    if (checks.veryLongLength) score += 1;
     if (checks.lowercase) score += 1;
     if (checks.uppercase) score += 1;
     if (checks.numbers) score += 1;
     if (checks.symbols) score += 2;
 
-    // Determine strength
-    if (score <= 2) {
+    // Check for multiple character types
+    let charTypeCount = 0;
+    if (checks.lowercase) charTypeCount++;
+    if (checks.uppercase) charTypeCount++;
+    if (checks.numbers) charTypeCount++;
+    if (checks.symbols) charTypeCount++;
+    
+    if (charTypeCount >= 3) score += 1;
+    if (charTypeCount === 4) score += 1;
+
+    // Penalize if weak patterns detected
+    if (hasWeakPattern) {
+      score = Math.max(0, score - 4);
+    }
+
+    // Determine strength with stricter thresholds
+    if (score <= 3 || hasWeakPattern) {
       return { strength: 'weak', score, text: '❌ Weak - Your password is easily crackable' };
-    } else if (score <= 4) {
-      return { strength: 'fair', score, text: '⚠️ Fair - Could be stronger' };
     } else if (score <= 6) {
+      return { strength: 'fair', score, text: '⚠️ Fair - Could be stronger' };
+    } else if (score <= 9) {
       return { strength: 'good', score, text: '✓ Good - Decent password' };
     } else {
       return { strength: 'strong', score, text: '✓✓ Strong - Excellent password!' };

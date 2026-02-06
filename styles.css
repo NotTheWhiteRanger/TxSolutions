@@ -24,8 +24,8 @@ body {
   color: #333;
   background: var(--bg);
   line-height: 1.6;
-  -webkit-font-smoothing:antialiased; 
-  -moz-osx-font-smoothing:grayscale;
+  -webkit-font-smoothing: antialiased; 
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Skip Link for Accessibility */

@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Tools | Texan Support & Solutions</title>
+  <meta name="description" content="Free security tools including file scanner, password generator, and password strength tester from Texan Support & Solutions." />
+  <meta name="theme-color" content="#1e3a5f" />
+  <link rel="canonical" href="https://solutionstx.com/tools.html" />
+
+  <style>
+    :root{
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --muted: #64748b;
+      --brand: #1e3a5f;
+      --brand-2: #3182ce;
+      --accent: #2c5282;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --max-w: 1200px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: #333;
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Navigation */
+    nav.primary { display:flex; align-items:center; gap:1rem; }
+    .nav-links{ display:flex; gap:1rem; list-style:none; align-items:center; }
+    .nav-links a{ color:var(--muted); text-decoration:none; padding:.5rem .6rem; border-radius:6px; }
+    .nav-links a:hover, .nav-links a:focus{ background:rgba(49,130,206,.06); color:var(--brand); outline:none; }
+    .nav-toggle{ display:none; background:none; border:0; font-size:1.1rem; padding:.5rem; color:var(--brand-2); }
+    @media (max-width:880px){ .nav-links{ display:none; } .nav-toggle{ display:inline-flex; } .header-content{ justify-content:space-between; } }
+
+    /* Header */
+    header {
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-content {
+      display: flex; justify-content: space-between; align-items: center; padding: 1rem 0;
+    }
+    .logo {
+      display: flex; align-items: center;
+      font-size: 1.8rem; font-weight: bold; color: #1e3a5f;
+      text-decoration: none;
+    }
+    .logo img { width: 45px; height: 45px; margin-right: 12px; object-fit: contain; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      color: white; text-align: center; padding: 3rem 0;
+    }
+    .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .hero .description {
+      font-size: 1.1rem; max-width: 600px; margin: 0 auto; opacity: 0.9;
+    }
+
+    /* Tools Section */
+    .tools-section { padding: 3rem 0; }
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+    }
+    .tool-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--brand-2), var(--accent));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+    .tool-title {
+      font-size: 1.8rem;
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    /* File Scanner */
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 3rem 2rem;
+      text-align: center;
+      background: #f8fafc;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover, .upload-area.drag-over {
+      border-color: var(--brand-2);
+      background: #eff6ff;
+    }
+    .upload-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--brand-2);
+    }
+    .file-input {
+      display: none;
+    }
+    .scan-result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 8px;
+      display: none;
+    }
+    .scan-result.show { display: block; }
+    .result-safe {
+      background: #d1fae5;
+      border: 1px solid #10b981;
+      color: #065f46;
+    }
+    .result-warning {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+    }
+    .result-danger {
+      background: #fee2e2;
+      border: 1px solid #ef4444;
+      color: #991b1b;
+    }
+
+    /* Password Generator */
+    .generator-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .option-label {
+      font-weight: 600;
+      color: var(--brand);
+      font-size: 0.95rem;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    input[type="checkbox"], input[type="radio"] {
+      cursor: pointer;
+    }
+    input[type="range"] {
+      width: 100%;
+      cursor: pointer;
+    }
+    input[type="number"], select {
+      padding: 0.5rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .generated-output {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      word-break: break-all;
+      margin-bottom: 1rem;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* Password Strength Tester */
+    .strength-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .strength-input:focus {
+      outline: none;
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 3px rgba(49,130,206,.15);
+    }
+    .strength-meter {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .strength-bar {
+      height: 100%;
+      width: 0;
+      transition: width 0.3s ease, background-color 0.3s ease;
+      border-radius: 4px;
+    }
+    .strength-label {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .strength-feedback {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .feedback-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary {
+      background: var(--brand-2);
+      color: white;
+      box-shadow: 0 4px 12px rgba(49,130,206,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: #64748b;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #475569;
+    }
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    .btn-success:hover {
+      background: #059669;
+    }
+
+    /* Footer */
+    footer { background: var(--brand); color: white; text-align: center; padding: 2.5rem 0; margin-top: 3rem; }
+    footer p { opacity: 0.95; font-size: 0.95rem; }
+    footer a { color: white; text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content { flex-direction: column; text-align: center; gap: 1rem; }
+      .hero h1 { font-size: 2rem; }
+      .generator-options { grid-template-columns: 1fr; }
+    }
+
+    /* Loading spinner */
+    .spinner {
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid var(--brand-2);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin: 0 auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">
+          <img src="https://raw.githubusercontent.com/NotTheWhiteRanger/TxSolutions/main/Images/Logo.png" alt="Texan Support & Solutions Logo" loading="lazy" referrerpolicy="no-referrer" />
+          Texan Support & Solutions
+        </a>
+        <nav class="primary" aria-label="Primary navigation">
+          <button class="nav-toggle" aria-controls="site-navigation" aria-expanded="false" aria-label="Open menu">☰</button>
+          <ul id="site-navigation" class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="tools.html">Security Tools</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1>Security Tools</h1>
+        <p class="description">Free security tools to help protect your digital life - scan files, generate secure passwords, and test password strength.</p>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="tools-section">
+      <div class="container">
+        
+        <!-- File Scanner -->
+        <div class="tool-card" id="file-scanner">
+          <div class="tool-header">
+            <div class="tool-icon">🛡️</div>
+            <h2 class="tool-title">File Scanner</h2>
+          </div>
+          <p style="margin-bottom: 1.5rem; color: var(--muted);">
+            Scan files for viruses and malware using VirusTotal's powerful multi-engine analysis. Upload a file to check it against 70+ antivirus engines.
+          </p>
+          
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <h3>Drop a file here or click to browse</h3>
+            <p style="color: var(--muted); margin-top: 0.5rem;">Maximum file size: 32MB</p>
+            <input type="file" id="fileInput" class="file-input" accept="*/*">
+          </div>
+          
+          <div id="scanStatus" style="margin-top: 1rem; text-align: center;"></div>
+          
+          <div id="scanResult" class="scan-result">
+            <h3 style="margin-bottom: 1rem;">Scan Results</h3>
+            <div id="resultContent"></div>
+          </div>
+        </div>
+
+        <!-- Password Generator -->
+        <div class="tool-card" id="password-generator">
+          <div class="tool-header">
+            <div class="tool-icon">🔑</div>
+            <h2 class="tool-title">Password Generator</h2>
+          </div>
+          <p style="margin-bottom: 1.5rem; color: var(--muted);">
+            Generate strong, random passwords, passphrases, or word combinations for maximum security.
+          </p>
+
+          <div class="generator-options">
+            <div class="option-group">
+              <label class="option-label">Type</label>
+              <select id="genType" style="width: 100%;">
+                <option value="password">Password</option>
+                <option value="passphrase">Passphrase</option>
+                <option value="words">Random Words</option>
+                <option value="pin">PIN</option>
+              </select>
+            </div>
+
+            <div class="option-group" id="lengthOption">
+              <label class="option-label">Length: <span id="lengthValue">16</span></label>
+              <input type="range" id="passwordLength" min="8" max="64" value="16">
+            </div>
+
+            <div class="option-group" id="wordCountOption" style="display: none;">
+              <label class="option-label">Word Count</label>
+              <input type="number" id="wordCount" min="3" max="10" value="4" style="width: 100%;">
+            </div>
+
+            <div class="option-group" id="pinLengthOption" style="display: none;">
+              <label class="option-label">PIN Length</label>
+              <input type="number" id="pinLength" min="4" max="12" value="6" style="width: 100%;">
+            </div>
+          </div>
+
+          <div id="charOptions" class="checkbox-group" style="margin-bottom: 1.5rem;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="includeUpper" checked> Uppercase (A-Z)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="includeLower" checked> Lowercase (a-z)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="includeNumbers" checked> Numbers (0-9)
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="includeSymbols" checked> Symbols (!@#$...)
+            </label>
+          </div>
+
+          <div class="generated-output" id="generatedPassword">
+            <span id="passwordOutput" style="flex: 1; color: var(--muted);">Click "Generate" to create a password</span>
+            <button class="btn btn-secondary" id="copyBtn" style="display: none;">📋 Copy</button>
+          </div>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" id="generateBtn">🎲 Generate</button>
+            <button class="btn btn-secondary" id="regenerateBtn" style="display: none;">🔄 Generate Another</button>
+          </div>
+        </div>
+
+        <!-- Password Strength Tester -->
+        <div class="tool-card" id="password-tester">
+          <div class="tool-header">
+            <div class="tool-icon">📊</div>
+            <h2 class="tool-title">Password Strength Tester</h2>
+          </div>
+          <p style="margin-bottom: 1.5rem; color: var(--muted);">
+            Test the strength of your passwords and get recommendations for improvement.
+          </p>
+
+          <input 
+            type="password" 
+            id="testPassword" 
+            class="strength-input" 
+            placeholder="Enter a password to test..."
+            autocomplete="off"
+          >
+          
+          <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer;">
+            <input type="checkbox" id="showPassword">
+            Show Password
+          </label>
+
+          <div class="strength-meter">
+            <div class="strength-bar" id="strengthBar"></div>
+          </div>
+
+          <div class="strength-label" id="strengthLabel" style="color: var(--muted);">
+            Enter a password to see its strength
+          </div>
+
+          <div class="strength-feedback" id="strengthFeedback">
+            <p style="font-weight: 600; margin-bottom: 0.5rem;">Strength Criteria:</p>
+            <div class="feedback-item">
+              <span id="lengthCheck">⚪</span> At least 12 characters
+            </div>
+            <div class="feedback-item">
+              <span id="upperCheck">⚪</span> Contains uppercase letters
+            </div>
+            <div class="feedback-item">
+              <span id="lowerCheck">⚪</span> Contains lowercase letters
+            </div>
+            <div class="feedback-item">
+              <span id="numberCheck">⚪</span> Contains numbers
+            </div>
+            <div class="feedback-item">
+              <span id="symbolCheck">⚪</span> Contains special characters
+            </div>
+            <div class="feedback-item">
+              <span id="varietyCheck">⚪</span> Good character variety
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Texan Support & Solutions. <a href="index.html">Return to Home</a></p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile nav toggle
+    (function(){
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('site-navigation');
+      if (!toggle || !nav) return;
+      toggle.addEventListener('click', function(){
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        if (!expanded){
+          nav.style.display = 'flex';
+          nav.style.flexDirection = 'column';
+          nav.style.background = 'white';
+          nav.style.position = 'absolute';
+          nav.style.right = '20px';
+          nav.style.top = '64px';
+          nav.style.padding = '1rem';
+          nav.style.borderRadius = '8px';
+          nav.style.boxShadow = '0 6px 20px rgba(0,0,0,.12)';
+        } else {
+          nav.style.display = '';
+          nav.style.position = '';
+        }
+      });
+      window.addEventListener('resize', ()=>{ if (window.innerWidth > 880){ nav.style.display = ''; toggle.setAttribute('aria-expanded','false'); } });
+    })();
+
+    // File Scanner
+    (function() {
+      const uploadArea = document.getElementById('uploadArea');
+      const fileInput = document.getElementById('fileInput');
+      const scanStatus = document.getElementById('scanStatus');
+      const scanResult = document.getElementById('scanResult');
+      const resultContent = document.getElementById('resultContent');
+      const MAX_FILE_SIZE_BYTES = 32 * 1024 * 1024; // 32MB limit
+
+      // Note: For real VirusTotal integration, implement a backend service to securely handle API keys.
+      // Never expose API keys in client-side code as they can be easily extracted and misused.
+
+      uploadArea.addEventListener('click', () => fileInput.click());
+
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) handleFile(file);
+      });
+
+      async function handleFile(file) {
+        // Check file size against limit
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+          showStatus('File too large. Maximum size is 32MB.', 'danger');
+          return;
+        }
+
+        scanResult.classList.remove('show');
+        showStatus('<div class="spinner"></div> Analyzing file...', 'info');
+
+        // Simulate scan for demo purposes
+        // In production, you would use the VirusTotal API
+        setTimeout(() => {
+          performSimulatedScan(file);
+        }, 2000);
+      }
+
+      function performSimulatedScan(file) {
+        // This is a simulated scan for demonstration
+        // In production, integrate with VirusTotal API
+        const fileExt = file.name.split('.').pop().toLowerCase();
+        const suspiciousExts = ['exe', 'bat', 'cmd', 'vbs', 'ps1', 'scr', 'com'];
+        const isSuspicious = suspiciousExts.includes(fileExt);
+        
+        // Simulate random detection for demo
+        const detectionCount = isSuspicious ? Math.floor(Math.random() * 5) : 0;
+        const totalEngines = 70;
+        
+        let resultClass, resultIcon, resultTitle;
+        
+        if (detectionCount === 0) {
+          resultClass = 'result-safe';
+          resultIcon = '✅';
+          resultTitle = 'No threats detected';
+        } else if (detectionCount < 3) {
+          resultClass = 'result-warning';
+          resultIcon = '⚠️';
+          resultTitle = 'Potential threat detected';
+        } else {
+          resultClass = 'result-danger';
+          resultIcon = '🚫';
+          resultTitle = 'Threat detected!';
+        }
+        
+        scanStatus.innerHTML = '';
+        scanResult.className = `scan-result show ${resultClass}`;
+        resultContent.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <span style="font-size: 2rem;">${resultIcon}</span>
+            <div>
+              <h3 style="margin: 0; font-size: 1.3rem;">${resultTitle}</h3>
+              <p style="margin: 0.25rem 0 0 0;">File: ${file.name}</p>
+            </div>
+          </div>
+          <div style="background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 6px; margin-top: 1rem;">
+            <p><strong>Detection ratio:</strong> ${detectionCount}/${totalEngines} security vendors</p>
+            <p><strong>File size:</strong> ${formatFileSize(file.size)}</p>
+            <p><strong>File type:</strong> ${fileExt.toUpperCase()}</p>
+          </div>
+          ${detectionCount > 0 ? `
+            <div style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.05); border-radius: 6px;">
+              <p style="font-weight: 600; margin-bottom: 0.5rem;">⚠️ Security Recommendation:</p>
+              <p>This file has been flagged by ${detectionCount} antivirus engine${detectionCount > 1 ? 's' : ''}. Exercise caution before opening.</p>
+            </div>
+          ` : ''}
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted);">
+            <strong>Note:</strong> This is a simulated scan for demonstration. For real scanning, integrate with VirusTotal API by adding your API key.
+          </p>
+        `;
+      }
+
+      function showStatus(message, type) {
+        scanStatus.innerHTML = `<div style="color: var(--${type}); font-weight: 600;">${message}</div>`;
+      }
+
+      function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+      }
+    })();
+
+    // Password Generator
+    (function() {
+      const genType = document.getElementById('genType');
+      const passwordLength = document.getElementById('passwordLength');
+      const lengthValue = document.getElementById('lengthValue');
+      const wordCount = document.getElementById('wordCount');
+      const pinLength = document.getElementById('pinLength');
+      const includeUpper = document.getElementById('includeUpper');
+      const includeLower = document.getElementById('includeLower');
+      const includeNumbers = document.getElementById('includeNumbers');
+      const includeSymbols = document.getElementById('includeSymbols');
+      const generateBtn = document.getElementById('generateBtn');
+      const regenerateBtn = document.getElementById('regenerateBtn');
+      const passwordOutput = document.getElementById('passwordOutput');
+      const copyBtn = document.getElementById('copyBtn');
+      const lengthOption = document.getElementById('lengthOption');
+      const wordCountOption = document.getElementById('wordCountOption');
+      const pinLengthOption = document.getElementById('pinLengthOption');
+      const charOptions = document.getElementById('charOptions');
+
+      // Common words for passphrase generation
+      const words = [
+        'apple', 'banana', 'cherry', 'dragon', 'elephant', 'forest', 'galaxy', 'harbor',
+        'island', 'jungle', 'knight', 'lemon', 'mountain', 'neptune', 'ocean', 'palace',
+        'quantum', 'rainbow', 'sunset', 'thunder', 'umbrella', 'volcano', 'whisper', 'xenon',
+        'yellow', 'zephyr', 'crystal', 'diamond', 'emerald', 'phoenix', 'silver', 'golden',
+        'purple', 'orange', 'turquoise', 'violet', 'crimson', 'azure', 'marble', 'granite'
+      ];
+
+      passwordLength.addEventListener('input', (e) => {
+        lengthValue.textContent = e.target.value;
+      });
+
+      genType.addEventListener('change', () => {
+        const type = genType.value;
+        lengthOption.style.display = type === 'password' ? 'block' : 'none';
+        wordCountOption.style.display = (type === 'passphrase' || type === 'words') ? 'block' : 'none';
+        pinLengthOption.style.display = type === 'pin' ? 'block' : 'none';
+        charOptions.style.display = type === 'password' ? 'flex' : 'none';
+      });
+
+      generateBtn.addEventListener('click', generatePassword);
+      regenerateBtn.addEventListener('click', generatePassword);
+
+      copyBtn.addEventListener('click', () => {
+        const text = passwordOutput.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = '✓ Copied!';
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+          }, 2000);
+        });
+      });
+
+      function generatePassword() {
+        let password = '';
+        const type = genType.value;
+
+        if (type === 'password') {
+          password = generateRandomPassword();
+        } else if (type === 'passphrase') {
+          password = generatePassphrase();
+        } else if (type === 'words') {
+          password = generateRandomWords();
+        } else if (type === 'pin') {
+          password = generatePIN();
+        }
+
+        passwordOutput.textContent = password;
+        passwordOutput.style.color = '#333';
+        copyBtn.style.display = 'block';
+        regenerateBtn.style.display = 'inline-flex';
+      }
+
+      function generateRandomPassword() {
+        const length = parseInt(passwordLength.value);
+        let charset = '';
+        
+        if (includeUpper.checked) charset += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        if (includeLower.checked) charset += 'abcdefghijklmnopqrstuvwxyz';
+        if (includeNumbers.checked) charset += '0123456789';
+        if (includeSymbols.checked) charset += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+        if (!charset) {
+          return 'Please select at least one character type';
+        }
+
+        let password = '';
+        const array = new Uint32Array(length);
+        crypto.getRandomValues(array);
+        
+        for (let i = 0; i < length; i++) {
+          password += charset[array[i] % charset.length];
+        }
+        
+        return password;
+      }
+
+      function generatePassphrase() {
+        const count = parseInt(wordCount.value);
+        const selectedWords = [];
+        const array = new Uint32Array(count);
+        crypto.getRandomValues(array);
+        
+        for (let i = 0; i < count; i++) {
+          selectedWords.push(words[array[i] % words.length]);
+        }
+        
+        return selectedWords.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+      }
+
+      function generateRandomWords() {
+        const count = parseInt(wordCount.value);
+        const selectedWords = [];
+        const array = new Uint32Array(count);
+        crypto.getRandomValues(array);
+        
+        for (let i = 0; i < count; i++) {
+          selectedWords.push(words[array[i] % words.length]);
+        }
+        
+        return selectedWords.join(' ');
+      }
+
+      function generatePIN() {
+        const length = parseInt(pinLength.value);
+        const array = new Uint32Array(length);
+        crypto.getRandomValues(array);
+        
+        let pin = '';
+        for (let i = 0; i < length; i++) {
+          pin += array[i] % 10;
+        }
+        
+        return pin;
+      }
+    })();
+
+    // Password Strength Tester
+    (function() {
+      const testPassword = document.getElementById('testPassword');
+      const showPassword = document.getElementById('showPassword');
+      const strengthBar = document.getElementById('strengthBar');
+      const strengthLabel = document.getElementById('strengthLabel');
+      const lengthCheck = document.getElementById('lengthCheck');
+      const upperCheck = document.getElementById('upperCheck');
+      const lowerCheck = document.getElementById('lowerCheck');
+      const numberCheck = document.getElementById('numberCheck');
+      const symbolCheck = document.getElementById('symbolCheck');
+      const varietyCheck = document.getElementById('varietyCheck');
+
+      showPassword.addEventListener('change', (e) => {
+        testPassword.type = e.target.checked ? 'text' : 'password';
+      });
+
+      testPassword.addEventListener('input', (e) => {
+        const password = e.target.value;
+        if (!password) {
+          resetStrength();
+          return;
+        }
+        analyzePassword(password);
+      });
+
+      function resetStrength() {
+        strengthBar.style.width = '0%';
+        strengthLabel.textContent = 'Enter a password to see its strength';
+        strengthLabel.style.color = 'var(--muted)';
+        [lengthCheck, upperCheck, lowerCheck, numberCheck, symbolCheck, varietyCheck].forEach(el => {
+          el.textContent = '⚪';
+        });
+      }
+
+      function analyzePassword(password) {
+        // Character variety threshold: at least 60% unique characters indicates good variety
+        // This helps detect passwords like "aaaaaa1A!" (low variety) vs "aBc123!@#" (good variety)
+        const VARIETY_THRESHOLD = 0.6;
+        
+        let score = 0;
+        const checks = {
+          length: password.length >= 12,
+          upper: /[A-Z]/.test(password),
+          lower: /[a-z]/.test(password),
+          number: /[0-9]/.test(password),
+          symbol: /[^A-Za-z0-9]/.test(password),
+          variety: new Set(password).size >= password.length * VARIETY_THRESHOLD
+        };
+
+        // Update check marks
+        lengthCheck.textContent = checks.length ? '✅' : '❌';
+        upperCheck.textContent = checks.upper ? '✅' : '❌';
+        lowerCheck.textContent = checks.lower ? '✅' : '❌';
+        numberCheck.textContent = checks.number ? '✅' : '❌';
+        symbolCheck.textContent = checks.symbol ? '✅' : '❌';
+        varietyCheck.textContent = checks.variety ? '✅' : '❌';
+
+        // Calculate score
+        Object.values(checks).forEach(check => {
+          if (check) score++;
+        });
+
+        // Additional scoring
+        if (password.length >= 16) score += 0.5;
+        if (password.length >= 20) score += 0.5;
+
+        const maxScore = 7;
+        const percentage = (score / maxScore) * 100;
+        
+        // Update strength bar
+        strengthBar.style.width = percentage + '%';
+        
+        // Determine strength level and color
+        let strengthText, strengthColor;
+        
+        if (percentage < 30) {
+          strengthText = 'Very Weak';
+          strengthColor = '#ef4444';
+        } else if (percentage < 50) {
+          strengthText = 'Weak';
+          strengthColor = '#f59e0b';
+        } else if (percentage < 70) {
+          strengthText = 'Moderate';
+          strengthColor = '#eab308';
+        } else if (percentage < 85) {
+          strengthText = 'Strong';
+          strengthColor = '#10b981';
+        } else {
+          strengthText = 'Very Strong';
+          strengthColor = '#059669';
+        }
+        
+        strengthBar.style.background = strengthColor;
+        strengthLabel.textContent = `Password Strength: ${strengthText}`;
+        strengthLabel.style.color = strengthColor;
+      }
+    })();
+
+    // Smooth scroll for anchors
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

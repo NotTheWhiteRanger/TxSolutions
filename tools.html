@@ -540,7 +540,10 @@
       const scanStatus = document.getElementById('scanStatus');
       const scanResult = document.getElementById('scanResult');
       const resultContent = document.getElementById('resultContent');
-      const VIRUSTOTAL_API_KEY = 'YOUR_API_KEY_HERE'; // Users should replace with their own key
+      const MAX_FILE_SIZE_BYTES = 32 * 1024 * 1024; // 32MB limit
+
+      // Note: For real VirusTotal integration, implement a backend service to securely handle API keys.
+      // Never expose API keys in client-side code as they can be easily extracted and misused.
 
       uploadArea.addEventListener('click', () => fileInput.click());
 
@@ -566,8 +569,8 @@
       });
 
       async function handleFile(file) {
-        // Check file size (32MB limit)
-        if (file.size > 32 * 1024 * 1024) {
+        // Check file size against limit
+        if (file.size > MAX_FILE_SIZE_BYTES) {
           showStatus('File too large. Maximum size is 32MB.', 'danger');
           return;
         }
@@ -822,6 +825,10 @@
       }
 
       function analyzePassword(password) {
+        // Character variety threshold: at least 60% unique characters indicates good variety
+        // This helps detect passwords like "aaaaaa1A!" (low variety) vs "aBc123!@#" (good variety)
+        const VARIETY_THRESHOLD = 0.6;
+        
         let score = 0;
         const checks = {
           length: password.length >= 12,
@@ -829,7 +836,7 @@
           lower: /[a-z]/.test(password),
           number: /[0-9]/.test(password),
           symbol: /[^A-Za-z0-9]/.test(password),
-          variety: new Set(password).size >= password.length * 0.6
+          variety: new Set(password).size >= password.length * VARIETY_THRESHOLD
         };
 
         // Update check marks

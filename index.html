@@ -79,6 +79,8 @@
       font-size: 1.8rem; font-weight: bold; color: #1e3a5f;
     }
     .logo img { width: 45px; height: 45px; margin-right: 12px; object-fit: contain; }
+    .logo .full-name { display: inline; }
+    .logo .short-name { display: none; }
     .contact-info {
       display: flex; align-items: center; gap: 2rem; font-size: 0.95rem;
     }
@@ -202,8 +204,27 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .header-content { flex-direction: column; text-align: center; gap: 1rem; }
-      .contact-info { flex-direction: column; gap: 0.5rem; }
+      /* Mobile Header Optimization - Compact Layout */
+      .header-content { 
+        flex-direction: row; 
+        padding: 0.5rem 0;
+        gap: 0.5rem;
+      }
+      .logo { 
+        font-size: 1.1rem;
+      }
+      .logo img { 
+        width: 32px; 
+        height: 32px;
+        margin-right: 8px;
+      }
+      /* Show shortened name on mobile */
+      .logo .full-name { display: none; }
+      .logo .short-name { display: inline; }
+      /* Hide contact info in header on mobile (shown in hero and contact sections) */
+      .header-content .contact-info {
+        display: none !important;
+      }
       .hero h1 { font-size: 2.2rem; }
       .hero .subtitle { font-size: 1.2rem; }
       .hero .description { font-size: 1rem; padding: 0 1rem; }
@@ -222,7 +243,8 @@
         <div style="display:flex;align-items:center;gap:1rem;">
           <div class="logo">
             <img src="https://raw.githubusercontent.com/NotTheWhiteRanger/TxSolutions/main/Images/Logo.png" alt="Texan Support & Solutions Logo" loading="lazy" referrerpolicy="no-referrer" />
-            Texan Support & Solutions
+            <span class="full-name">Texan Support & Solutions</span>
+            <span class="short-name">Texan Support</span>
           </div>
           <div class="contact-info" style="display:flex;flex-direction:column;">
             <div class="contact-item" style="font-weight:600;color:var(--brand);">📍 Eastland, TX</div>

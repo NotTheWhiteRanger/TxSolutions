@@ -429,6 +429,15 @@
             </label>
           </div>
 
+          <div id="passphraseOptions" class="checkbox-group" style="margin-bottom: 1.5rem; display: none;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="passphraseNumbers"> Add Numbers
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="passphraseSpecialChars"> Add Special Characters
+            </label>
+          </div>
+
           <div class="generated-output" id="generatedPassword">
             <span id="passwordOutput" style="flex: 1; color: var(--muted);">Click "Generate" to create a password</span>
             <button class="btn btn-secondary" id="copyBtn" style="display: none;">📋 Copy</button>
@@ -669,6 +678,9 @@
       const wordCountOption = document.getElementById('wordCountOption');
       const pinLengthOption = document.getElementById('pinLengthOption');
       const charOptions = document.getElementById('charOptions');
+      const passphraseOptions = document.getElementById('passphraseOptions');
+      const passphraseNumbers = document.getElementById('passphraseNumbers');
+      const passphraseSpecialChars = document.getElementById('passphraseSpecialChars');
 
       // Common words for passphrase generation
       const words = [
@@ -689,6 +701,7 @@
         wordCountOption.style.display = (type === 'passphrase' || type === 'words') ? 'block' : 'none';
         pinLengthOption.style.display = type === 'pin' ? 'block' : 'none';
         charOptions.style.display = type === 'password' ? 'flex' : 'none';
+        passphraseOptions.style.display = type === 'passphrase' ? 'flex' : 'none';
       });
 
       generateBtn.addEventListener('click', generatePassword);
@@ -759,7 +772,22 @@
           selectedWords.push(words[array[i] % words.length]);
         }
         
-        return selectedWords.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+        let passphrase = selectedWords.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-');
+        
+        // Add numbers if option is selected
+        if (passphraseNumbers.checked) {
+          const randomNum = Math.floor(Math.random() * 1000);
+          passphrase += randomNum;
+        }
+        
+        // Add special characters if option is selected
+        if (passphraseSpecialChars.checked) {
+          const specialChars = '!@#$%^&*';
+          const randomIndex = Math.floor(Math.random() * specialChars.length);
+          passphrase += specialChars[randomIndex];
+        }
+        
+        return passphrase;
       }
 
       function generateRandomWords() {

@@ -776,14 +776,18 @@
         
         // Add numbers if option is selected
         if (passphraseNumbers.checked) {
-          const randomNum = Math.floor(Math.random() * 1000);
+          const randomArray = new Uint32Array(1);
+          crypto.getRandomValues(randomArray);
+          const randomNum = randomArray[0] % 1000;
           passphrase += randomNum;
         }
         
         // Add special characters if option is selected
         if (passphraseSpecialChars.checked) {
           const specialChars = '!@#$%^&*';
-          const randomIndex = Math.floor(Math.random() * specialChars.length);
+          const randomArray = new Uint32Array(1);
+          crypto.getRandomValues(randomArray);
+          const randomIndex = randomArray[0] % specialChars.length;
           passphrase += specialChars[randomIndex];
         }
         

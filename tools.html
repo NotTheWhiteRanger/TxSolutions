@@ -58,6 +58,8 @@
       text-decoration: none;
     }
     .logo img { width: 45px; height: 45px; margin-right: 12px; object-fit: contain; }
+    .logo .full-name { display: inline; }
+    .logo .short-name { display: none; }
 
     /* Hero */
     .hero {
@@ -295,7 +297,23 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-      .header-content { flex-direction: column; text-align: center; gap: 1rem; }
+      /* Mobile Header Optimization - Compact Layout */
+      .header-content { 
+        flex-direction: row; 
+        padding: 0.5rem 0;
+        gap: 0.5rem;
+      }
+      .logo { 
+        font-size: 1.1rem;
+      }
+      .logo img { 
+        width: 32px; 
+        height: 32px;
+        margin-right: 8px;
+      }
+      /* Show shortened name on mobile */
+      .logo .full-name { display: none; }
+      .logo .short-name { display: inline; }
       .hero h1 { font-size: 2rem; }
       .generator-options { grid-template-columns: 1fr; }
     }
@@ -325,7 +343,8 @@
       <div class="header-content">
         <a href="index.html" class="logo">
           <img src="https://raw.githubusercontent.com/NotTheWhiteRanger/TxSolutions/main/Images/Logo.png" alt="Texan Support & Solutions Logo" loading="lazy" referrerpolicy="no-referrer" />
-          Texan Support & Solutions
+          <span class="full-name">Texan Support & Solutions</span>
+          <span class="short-name">Texan Support</span>
         </a>
         <nav class="primary" aria-label="Primary navigation">
           <button class="nav-toggle" aria-controls="site-navigation" aria-expanded="false" aria-label="Open menu">☰</button>

@@ -83,13 +83,13 @@
       justify-content:space-between;
       padding:14px 0;
       gap:14px;
+      flex-wrap:wrap;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 280px;
     }
 
     .logo{
@@ -129,7 +129,35 @@
     }
     nav a:focus-visible{ outline:none; box-shadow:var(--ring); }
 
-    .actions{ display:flex; align-items:center; gap:10px; min-width: 280px; justify-content:flex-end; }
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      background:none;
+      border:1px solid var(--line);
+      border-radius:10px;
+      cursor:pointer;
+      padding:8px 10px;
+      width:40px;
+      height:40px;
+    }
+    .hamburger span{
+      display:block;
+      width:20px;
+      height:2px;
+      background:var(--text);
+      border-radius:2px;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+    .nav-menu{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
 
     .btn{
       display:inline-flex;
@@ -448,10 +476,35 @@
       font-size:13px;
     }
 
+    @media (max-width: 720px){
+      .hamburger{ display:flex; }
+      .nav-menu{
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        width:100%;
+        gap:4px;
+        padding-bottom:10px;
+      }
+      .nav-menu.open{ display:flex; }
+      nav{
+        flex-direction:column;
+        align-items:flex-start;
+        width:100%;
+        gap:2px;
+      }
+      nav a{ width:100%; }
+      .actions{
+        justify-content:flex-start;
+        flex-wrap:wrap;
+        padding-top:8px;
+        border-top:1px solid var(--line);
+        width:100%;
+      }
+    }
+
     @media (max-width: 920px){
       .hero-grid{ grid-template-columns: 1fr; }
-      .actions{ min-width:auto; }
-      .brand{ min-width:auto; }
       h1{ font-size:42px; }
       .card{ grid-column: span 12; }
       .tool-grid{ grid-template-columns: 1fr; }
@@ -479,16 +532,22 @@
         </div>
       </div>
 
-      <nav aria-label="Primary navigation">
-        <a href="#home-services">Home services</a>
-        <a href="#security">Cybersecurity</a>
-        <a href="#free-tools">Free tools</a>
-        <a href="#contact">Book</a>
-      </nav>
+      <button class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
 
-      <div class="actions">
-        <a class="btn ghost" href="#free-tools">Use free tools</a>
-        <a class="btn primary" href="#contact">Book a Visit</a>
+      <div class="nav-menu" id="navMenu">
+        <nav aria-label="Primary navigation">
+          <a href="#home-services">Home services</a>
+          <a href="#security">Cybersecurity</a>
+          <a href="free-tools.html">Free tools</a>
+          <a href="#contact">Book</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn ghost" href="free-tools.html">Use free tools</a>
+          <a class="btn primary" href="#contact">Book a Visit</a>
+        </div>
       </div>
     </div>
   </header>
@@ -510,7 +569,7 @@
 
           <div class="hero-cta">
             <a class="btn primary" href="#contact">Book a visit</a>
-            <a class="btn" href="#free-tools">Try the free tools</a>
+            <a class="btn" href="free-tools.html">Try the free tools</a>
           </div>
 
           <div class="trust" aria-label="Trust indicators">
@@ -645,117 +704,6 @@
       </div>
     </section>
 
-    <!-- UNIQUE VALUE: FREE TOOLS -->
-    <section class="section" id="free-tools" aria-labelledby="tools-title">
-      <div class="wrap">
-        <div class="section-title">
-          <div>
-            <h2 id="tools-title">Free Home Cyber Tools</h2>
-            <p>
-              Something useful even if you don’t hire us today. These tools run <strong>entirely in your browser</strong>—we don’t send your password anywhere.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <section class="tool" aria-label="Password generator and strength checker">
-            <h3>Password Toolkit</h3>
-            <p>Generate a strong password and quickly check the strength of one you already use.</p>
-
-            <div class="tool-grid">
-              <!-- Generator -->
-              <div class="stack" aria-label="Password generator">
-                <div class="fieldrow">
-                  <div>
-                    <label for="len">Length</label>
-                    <input id="len" type="number" min="12" max="64" value="20" inputmode="numeric" />
-                  </div>
-                  <div>
-                    <label for="words">Mode</label>
-                    <select id="mode">
-                      <option value="random" selected>Random</option>
-                      <option value="passphrase">Passphrase (words)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="fieldrow" id="randomOptions">
-                  <div>
-                    <label><input id="optUpper" type="checkbox" checked /> Include uppercase</label>
-                  </div>
-                  <div>
-                    <label><input id="optNumbers" type="checkbox" checked /> Include numbers</label>
-                  </div>
-                  <div>
-                    <label><input id="optSymbols" type="checkbox" checked /> Include symbols</label>
-                  </div>
-                  <div>
-                    <label><input id="optNoAmb" type="checkbox" checked /> Avoid ambiguous (O/0, l/1)</label>
-                  </div>
-                </div>
-
-                <div class="fieldrow" id="phraseOptions" style="display:none;">
-                  <div>
-                    <label for="wordCount">Words</label>
-                    <input id="wordCount" type="number" min="3" max="8" value="4" inputmode="numeric" />
-                  </div>
-                  <div>
-                    <label for="separator">Separator</label>
-                    <select id="separator">
-                      <option value="-" selected>dash (-)</option>
-                      <option value=" ">space</option>
-                      <option value=".">dot (.)</option>
-                      <option value="_">underscore (_)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="row-actions">
-                  <button class="btn primary small" type="button" id="genBtn">Generate</button>
-                  <button class="btn small" type="button" id="copyBtn">Copy</button>
-                </div>
-
-                <div class="output" id="generated" aria-live="polite">Click “Generate”</div>
-                <div class="note">
-                  Tip: store it in a password manager. Don’t reuse it across sites.
-                </div>
-              </div>
-
-              <!-- Strength tester -->
-              <div class="stack" aria-label="Password strength tester">
-                <label for="checkInput">Strength check (local only)</label>
-                <input id="checkInput" type="password" autocomplete="new-password" placeholder="Type here to test…" />
-
-                <div class="meter" aria-hidden="true"><div id="meterBar"></div></div>
-                <div class="scoreline">
-                  <span class="badge" id="scoreBadge">Score: —</span>
-                  <span id="scoreLabel">Waiting…</span>
-                </div>
-
-                <div class="note" id="advice">
-                  We do not transmit what you type. For best safety, avoid pasting real banking/email passwords on shared computers.
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <article class="card" style="grid-column: span 12;" aria-label="Free checklist">
-            <div class="pill">Free checklist</div>
-            <h3>60‑Second Home Security Checklist</h3>
-            <p style="margin-bottom:10px;">
-              A quick set of steps most homes can do today:
-            </p>
-            <ul class="clean" style="margin:0; padding-left:18px; color:var(--muted);">
-              <li>Update your router firmware and change the admin password</li>
-              <li>Turn on WPA3 (or WPA2‑AES) and disable WPS</li>
-              <li>Enable MFA on your email account (this protects password resets)</li>
-              <li>Back up photos/documents (cloud + external drive if possible)</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="contact" aria-labelledby="contact-title">
       <div class="wrap contact">
         <div class="section-title">
@@ -823,207 +771,17 @@
   </footer>
 
   <script>
-    // ---------------------------
-    // Password toolkit (client-side only)
-    // Uses Web Crypto for randomness when available.
-    // ---------------------------
-    const $ = (sel) => document.querySelector(sel);
-
-    function cryptoRandomInt(maxExclusive){
-      // maxExclusive must be > 0
-      const arr = new Uint32Array(1);
-      // rejection sampling to avoid modulo bias
-      const limit = Math.floor(0xFFFFFFFF / maxExclusive) * maxExclusive;
-      let x;
-      do {
-        crypto.getRandomValues(arr);
-        x = arr[0];
-      } while (x >= limit);
-      return x % maxExclusive;
-    }
-
-    function buildAlphabet({upper, numbers, symbols, noAmb}){
-      const lower = "abcdefghijkmnopqrstuvwxyz"; // remove l
-      const ambLower = "l";
-      const upperChars = "ABCDEFGHJKLMNPQRSTUVWXYZ"; // remove I,O
-      const ambUpper = "IO";
-      const nums = "23456789"; // remove 0,1
-      const ambNums = "01";
-      const sym = "!@#$%^&*()-_=+[]{};:,.?";
-
-      let a = lower;
-      if (!noAmb) a += ambLower;
-
-      if (upper){
-        a += upperChars;
-        if (!noAmb) a += ambUpper;
-      }
-      if (numbers){
-        a += nums;
-        if (!noAmb) a += ambNums;
-      }
-      if (symbols){
-        a += sym;
-      }
-      return a;
-    }
-
-    function generatePassword(len, opts){
-      const alphabet = buildAlphabet(opts);
-      if (!alphabet.length) return "";
-      let out = "";
-      for (let i=0; i<len; i++){
-        out += alphabet[cryptoRandomInt(alphabet.length)];
-      }
-      return out;
-    }
-
-    // Lightweight "strength" scoring (not a full zxcvbn replacement).
-    // Good enough to encourage better habits without external libs.
-    function scorePassword(pw){
-      if (!pw) return {score:0, label:"Empty", advice:"Type a password to get feedback."};
-
-      const length = pw.length;
-
-      const hasLower = /[a-z]/.test(pw);
-      const hasUpper = /[A-Z]/.test(pw);
-      const hasNumber = /[0-9]/.test(pw);
-      const hasSymbol = /[^A-Za-z0-9]/.test(pw);
-
-      // Penalties for common patterns
-      const hasRepeat = /(.)\1{2,}/.test(pw);                // aaa, 111
-      const hasSequence = /(?:0123|1234|2345|3456|4567|5678|6789)/.test(pw) ||
-                          /(?:abcd|bcde|cdef|defg|efgh|fghi|ghij|hijk|ijkl|jklm|klmn|lmno|mnop|nopq|opqr|pqrs|qrst|rstu|stuv|tuvw|uvwx|vwxy|wxyz)/i.test(pw);
-      const looksLikeWord = /^[A-Za-z]+$/.test(pw) && length <= 10;
-
-      // Base score by length
-      let score = 0;
-      if (length >= 8) score += 20;
-      if (length >= 12) score += 25;
-      if (length >= 16) score += 25;
-      if (length >= 20) score += 15;
-
-      // Variety
-      score += (hasLower ? 10 : 0);
-      score += (hasUpper ? 10 : 0);
-      score += (hasNumber ? 10 : 0);
-      score += (hasSymbol ? 10 : 0);
-
-      // Penalties
-      if (hasRepeat) score -= 15;
-      if (hasSequence) score -= 15;
-      if (looksLikeWord) score -= 20;
-
-      // Clamp 0..100
-      score = Math.max(0, Math.min(100, score));
-
-      let label = "Weak";
-      let advice = "Use 16+ characters and avoid patterns. Turn on MFA for important accounts.";
-      if (score >= 70){
-        label = "Strong";
-        advice = "Good. Make sure it’s unique per site and stored in a password manager.";
-      } else if (score >= 45){
-        label = "Okay";
-        advice = "Increase length (16+) and add uniqueness. Avoid reused passwords.";
-      }
-
-      return {score, label, advice};
-    }
-
-    // Passphrase generator (small built-in list to keep everything offline)
-    const WORDS = [
-      "texas","river","cactus","bluebonnet","trail","ranch","sunset","prairie","mesa","storm",
-      "longhorn","lantern","wagon","guitar","coffee","signal","horizon","windmill","saddle","ridge",
-      "barbecue","wildflower","sparrow","comet","starlight","bonfire","breeze","canyon","campfire","oak"
-    ];
-    function generatePassphrase(wordCount, separator){
-      const words = [];
-      for (let i=0; i<wordCount; i++){
-        words.push(WORDS[cryptoRandomInt(WORDS.length)]);
-      }
-      // Capitalize one word sometimes for variety
-      if (wordCount >= 3){
-        const idx = cryptoRandomInt(wordCount);
-        words[idx] = words[idx].charAt(0).toUpperCase() + words[idx].slice(1);
-      }
-      // Add a number at end sometimes
-      const n = cryptoRandomInt(90) + 10; // 10..99
-      return words.join(separator) + separator + n;
-    }
-
-    function setMeter(score){
-      const bar = $("#meterBar");
-      const badge = $("#scoreBadge");
-      const label = $("#scoreLabel");
-
-      bar.style.width = score + "%";
-      let color = "var(--bad)";
-      if (score >= 70) color = "var(--ok)";
-      else if (score >= 45) color = "var(--warn)";
-      bar.style.background = color;
-
-      badge.textContent = "Score: " + score;
-      label.textContent = score >= 70 ? "Looks strong" : (score >= 45 ? "Decent, can improve" : "Needs improvement");
-    }
-
-    function refreshModeUI(){
-      const mode = $("#mode").value;
-      $("#randomOptions").style.display = mode === "random" ? "grid" : "none";
-      $("#phraseOptions").style.display = mode === "passphrase" ? "grid" : "none";
-      $("#len").disabled = mode !== "random";
-    }
-
-    $("#mode").addEventListener("change", refreshModeUI);
-    refreshModeUI();
-
-    $("#genBtn").addEventListener("click", () => {
-      const mode = $("#mode").value;
-      let value = "";
-
-      if (mode === "passphrase"){
-        const wc = Math.max(3, Math.min(8, parseInt($("#wordCount").value || "4", 10)));
-        const sep = $("#separator").value;
-        value = generatePassphrase(wc, sep);
-      } else {
-        const len = Math.max(12, Math.min(64, parseInt($("#len").value || "20", 10)));
-        const opts = {
-          upper: $("#optUpper").checked,
-          numbers: $("#optNumbers").checked,
-          symbols: $("#optSymbols").checked,
-          noAmb: $("#optNoAmb").checked
-        };
-        value = generatePassword(len, opts);
-      }
-
-      $("#generated").textContent = value || "Select at least one option.";
-      // Also update strength meter quickly (without forcing user to type)
-      const s = scorePassword(value);
-      setMeter(s.score);
-      $("#scoreBadge").textContent = "Score: " + s.score + " (" + s.label + ")";
-      $("#scoreLabel").textContent = s.advice;
-      $("#advice").textContent = s.advice;
-    });
-
-    $("#copyBtn").addEventListener("click", async () => {
-      const text = $("#generated").textContent || "";
-      if (!text || text === "Click “Generate”" || text === "Select at least one option.") return;
-      try{
-        await navigator.clipboard.writeText(text);
-        $("#copyBtn").textContent = "Copied";
-        setTimeout(() => $("#copyBtn").textContent = "Copy", 1100);
-      }catch(e){
-        alert("Copy failed. You can manually select and copy the password.");
-      }
-    });
-
-    $("#checkInput").addEventListener("input", (e) => {
-      const pw = e.target.value || "";
-      const s = scorePassword(pw);
-      setMeter(s.score);
-      $("#scoreBadge").textContent = "Score: " + s.score + " (" + s.label + ")";
-      $("#scoreLabel").textContent = s.advice;
-      $("#advice").textContent = s.advice;
-    });
+    // Hamburger menu toggle
+    (function () {
+      const btn = document.querySelector('.hamburger');
+      const menu = document.getElementById('navMenu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        menu.classList.toggle('open');
+      });
+    })();
 
     // Prevent accidental submission if /quote isn't implemented yet (static hosting).
     // Remove once you have a backend endpoint handling POST /quote with CSRF + validation + rate limiting.

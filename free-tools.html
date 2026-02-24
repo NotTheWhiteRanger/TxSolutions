@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Home Cyber Tools | Texan Support &amp; Solutions</title>
+  <meta name="description" content="Free browser-based security tools: password generator and strength checker. No data sent anywhere—runs entirely in your browser." />
+  <meta name="theme-color" content="#2ea7ff" />
+
+  <!-- Stopgap security metas (best enforced as HTTP response headers) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
+  <style>
+    :root{
+      --bg:#f6f9ff;
+      --panel:#ffffff;
+      --text:#0b1220;
+      --muted:#516079;
+      --line:rgba(11,18,32,.10);
+      --brand:#9bd3ff;
+      --brand-strong:#2ea7ff;
+      --brand-deep:#0b5cff;
+      --shadow:0 16px 40px rgba(2, 8, 23, .08);
+      --shadow-soft:0 10px 26px rgba(2, 8, 23, .06);
+      --radius:18px;
+      --max:1180px;
+      --ring: 0 0 0 4px rgba(46,167,255,.22);
+      --ok:#16a34a;
+      --warn:#d97706;
+      --bad:#dc2626;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background:
+        radial-gradient(900px 420px at 18% -8%, rgba(46,167,255,.22), transparent 60%),
+        radial-gradient(900px 420px at 86% 0%, rgba(11,92,255,.16), transparent 58%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+
+    .wrap{ max-width:var(--max); margin:auto; padding:0 20px; }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    .skip-link{
+      position:absolute; left:14px; top:14px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      transform:translateY(-160%);
+      transition:transform .15s ease;
+      z-index:9999;
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .skip-link:focus{ transform:translateY(0); outline:none; box-shadow:var(--shadow-soft), var(--ring); }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(255,255,255,.78);
+      -webkit-backdrop-filter:saturate(1.2) blur(10px);
+      backdrop-filter:saturate(1.2) blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      width:40px;height:40px;
+      border-radius:12px;
+      background:
+        radial-gradient(12px 12px at 28% 32%, rgba(255,255,255,.85), transparent 60%),
+        linear-gradient(135deg, var(--brand), var(--brand-strong));
+      box-shadow: 0 10px 18px rgba(46,167,255,.20);
+      border:1px solid rgba(46,167,255,.22);
+    }
+
+    .brand-title{ display:flex; flex-direction:column; line-height:1.1; }
+    .brand-title strong{ font-size:14px; letter-spacing:.2px; }
+    .brand-title span{ font-size:12px; color:var(--muted); }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    nav a{
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      border:1px solid transparent;
+    }
+    nav a:hover{
+      color:var(--text);
+      background:rgba(46,167,255,.08);
+      border-color:rgba(46,167,255,.14);
+    }
+    nav a[aria-current="page"]{
+      color:var(--text);
+      background:rgba(46,167,255,.10);
+      border-color:rgba(46,167,255,.20);
+    }
+    nav a:focus-visible{ outline:none; box-shadow:var(--ring); }
+
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      background:none;
+      border:1px solid var(--line);
+      border-radius:10px;
+      cursor:pointer;
+      padding:8px 10px;
+      width:40px;
+      height:40px;
+    }
+    .hamburger span{
+      display:block;
+      width:20px;
+      height:2px;
+      background:var(--text);
+      border-radius:2px;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+    .nav-menu{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.92);
+      color:var(--text);
+      cursor:pointer;
+      font-size:14px;
+      font-weight:650;
+      text-decoration:none;
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{ transform:translateY(-1px); box-shadow:var(--shadow-soft); }
+    .btn:focus-visible{ outline:none; box-shadow:var(--shadow-soft), var(--ring); }
+    .btn:active{ transform:translateY(0); box-shadow:none; }
+
+    .btn.primary{
+      border:none;
+      color:white;
+      background: linear-gradient(135deg, var(--brand-strong), var(--brand-deep));
+      box-shadow: 0 14px 28px rgba(11,92,255,.18);
+    }
+
+    .btn.ghost{
+      background:transparent;
+      border:1px solid rgba(11,18,32,.12);
+    }
+
+    .btn.small{
+      padding:9px 12px;
+      border-radius:12px;
+      font-size:13px;
+    }
+
+    /* Sections */
+    main{ padding-bottom: 20px; }
+    .section{ padding:54px 0; }
+    .section-title{
+      display:flex; align-items:end; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:28px;
+      letter-spacing:-0.01em;
+    }
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      max-width: 80ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .card{
+      grid-column: span 6;
+      background:rgba(255,255,255,.78);
+      padding:18px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: rgba(46,167,255,.22);
+    }
+    .card h3{ margin:0 0 6px; font-size:16px; }
+    .card p{ margin:0; color:var(--muted); }
+    .card .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:10px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:#0b3aa9;
+      background: rgba(46,167,255,.10);
+      border:1px solid rgba(46,167,255,.16);
+      width:max-content;
+    }
+
+    /* Tool area */
+    .tool{
+      grid-column: span 12;
+      background:rgba(255,255,255,.80);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+      overflow:hidden;
+    }
+    .tool-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+      margin-top:14px;
+    }
+    .tool h3{ margin:0 0 6px; font-size:16px; }
+    .tool p{ margin:0; color:var(--muted); }
+
+    .fieldrow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    label{ font-size:13px; color:var(--muted); display:block; margin-bottom:8px; }
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(11,18,32,.14);
+      background: rgba(255,255,255,.90);
+      font: inherit;
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus, select:focus{ box-shadow: var(--ring); border-color: rgba(46,167,255,.34); }
+
+    .stack{ display:grid; gap:12px; }
+    .row-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+    .output{
+      border-radius:14px;
+      border:1px solid rgba(11,18,32,.10);
+      background:rgba(11,18,32,.03);
+      padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      word-break: break-word;
+    }
+
+    .meter{
+      height:10px;
+      border-radius:999px;
+      background: rgba(11,18,32,.08);
+      overflow:hidden;
+      border:1px solid rgba(11,18,32,.10);
+    }
+    .meter > div{
+      height:100%;
+      width:0%;
+      background: var(--bad);
+      transition: width .15s ease;
+    }
+    .scoreline{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(11,18,32,.10);
+      background:rgba(255,255,255,.80);
+      color: var(--text);
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    footer{
+      margin-top: 30px;
+      padding:26px 0;
+      border-top:1px solid var(--line);
+      background:rgba(255,255,255,.72);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 720px){
+      .hamburger{ display:flex; }
+      .nav-menu{
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        width:100%;
+        gap:4px;
+        padding-bottom:10px;
+      }
+      .nav-menu.open{ display:flex; }
+      nav{
+        flex-direction:column;
+        align-items:flex-start;
+        width:100%;
+        gap:2px;
+      }
+      nav a{ width:100%; }
+      .actions{
+        justify-content:flex-start;
+        flex-wrap:wrap;
+        padding-top:8px;
+        border-top:1px solid var(--line);
+        width:100%;
+      }
+    }
+
+    @media (max-width: 920px){
+      .card{ grid-column: span 12; }
+      .tool-grid{ grid-template-columns: 1fr; }
+      .fieldrow{ grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      *{ transition:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand" aria-label="Texan Support and Solutions">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-title">
+          <strong>Texan Support &amp; Solutions</strong>
+          <span>Residential IT &amp; Home Cybersecurity</span>
+        </div>
+      </div>
+
+      <button class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="navMenu">
+        <nav aria-label="Primary navigation">
+          <a href="index.html#home-services">Home services</a>
+          <a href="index.html#security">Cybersecurity</a>
+          <a href="free-tools.html" aria-current="page">Free tools</a>
+          <a href="index.html#contact">Book</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn ghost" href="index.html">Back to Home</a>
+          <a class="btn primary" href="index.html#contact">Book a Visit</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" id="free-tools" aria-labelledby="tools-title">
+      <div class="wrap">
+        <div class="section-title">
+          <div>
+            <h2 id="tools-title">Free Home Cyber Tools</h2>
+            <p>
+              Something useful even if you don't hire us today. These tools run <strong>entirely in your browser</strong>—we don't send your password anywhere.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid">
+          <section class="tool" aria-label="Password generator and strength checker">
+            <h3>Password Toolkit</h3>
+            <p>Generate a strong password and quickly check the strength of one you already use.</p>
+
+            <div class="tool-grid">
+              <!-- Generator -->
+              <div class="stack" aria-label="Password generator">
+                <div class="fieldrow">
+                  <div>
+                    <label for="len">Length</label>
+                    <input id="len" type="number" min="12" max="64" value="20" inputmode="numeric" />
+                  </div>
+                  <div>
+                    <label for="mode">Mode</label>
+                    <select id="mode">
+                      <option value="random" selected>Random</option>
+                      <option value="passphrase">Passphrase (words)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="fieldrow" id="randomOptions">
+                  <div>
+                    <label><input id="optUpper" type="checkbox" checked /> Include uppercase</label>
+                  </div>
+                  <div>
+                    <label><input id="optNumbers" type="checkbox" checked /> Include numbers</label>
+                  </div>
+                  <div>
+                    <label><input id="optSymbols" type="checkbox" checked /> Include symbols</label>
+                  </div>
+                  <div>
+                    <label><input id="optNoAmb" type="checkbox" checked /> Avoid ambiguous (O/0, l/1)</label>
+                  </div>
+                </div>
+
+                <div class="fieldrow" id="phraseOptions" style="display:none;">
+                  <div>
+                    <label for="wordCount">Words</label>
+                    <input id="wordCount" type="number" min="3" max="8" value="4" inputmode="numeric" />
+                  </div>
+                  <div>
+                    <label for="separator">Separator</label>
+                    <select id="separator">
+                      <option value="-" selected>dash (-)</option>
+                      <option value=" ">space</option>
+                      <option value=".">dot (.)</option>
+                      <option value="_">underscore (_)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row-actions">
+                  <button class="btn primary small" type="button" id="genBtn">Generate</button>
+                  <button class="btn small" type="button" id="copyBtn">Copy</button>
+                </div>
+
+                <div class="output" id="generated" aria-live="polite">Click "Generate"</div>
+                <div class="note">
+                  Tip: store it in a password manager. Don't reuse it across sites.
+                </div>
+              </div>
+
+              <!-- Strength tester -->
+              <div class="stack" aria-label="Password strength tester">
+                <label for="checkInput">Strength check (local only)</label>
+                <input id="checkInput" type="password" autocomplete="new-password" placeholder="Type here to test…" />
+
+                <div class="meter" aria-hidden="true"><div id="meterBar"></div></div>
+                <div class="scoreline">
+                  <span class="badge" id="scoreBadge">Score: —</span>
+                  <span id="scoreLabel">Waiting…</span>
+                </div>
+
+                <div class="note" id="advice">
+                  We do not transmit what you type. For best safety, avoid pasting real banking/email passwords on shared computers.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <article class="card" style="grid-column: span 12;" aria-label="Free checklist">
+            <div class="pill">Free checklist</div>
+            <h3>60‑Second Home Security Checklist</h3>
+            <p style="margin-bottom:10px;">
+              A quick set of steps most homes can do today:
+            </p>
+            <ul class="clean" style="margin:0; padding-left:18px; color:var(--muted);">
+              <li>Update your router firmware and change the admin password</li>
+              <li>Turn on WPA3 (or WPA2‑AES) and disable WPS</li>
+              <li>Enable MFA on your email account (this protects password resets)</li>
+              <li>Back up photos/documents (cloud + external drive if possible)</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <span>© 2026 Texan Support &amp; Solutions. All rights reserved.</span>
+        <span>Residential IT • Home Cybersecurity • Texas</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ---------------------------
+    // Password toolkit (client-side only)
+    // Uses Web Crypto for randomness when available.
+    // ---------------------------
+    const $ = (sel) => document.querySelector(sel);
+
+    function cryptoRandomInt(maxExclusive){
+      // maxExclusive must be > 0
+      const arr = new Uint32Array(1);
+      // rejection sampling to avoid modulo bias
+      const limit = Math.floor(0xFFFFFFFF / maxExclusive) * maxExclusive;
+      let x;
+      do {
+        crypto.getRandomValues(arr);
+        x = arr[0];
+      } while (x >= limit);
+      return x % maxExclusive;
+    }
+
+    function buildAlphabet({upper, numbers, symbols, noAmb}){
+      const lower = "abcdefghijkmnopqrstuvwxyz"; // remove l
+      const ambLower = "l";
+      const upperChars = "ABCDEFGHJKLMNPQRSTUVWXYZ"; // remove I,O
+      const ambUpper = "IO";
+      const nums = "23456789"; // remove 0,1
+      const ambNums = "01";
+      const sym = "!@#$%^&*()-_=+[]{};:,.?";
+
+      let a = lower;
+      if (!noAmb) a += ambLower;
+
+      if (upper){
+        a += upperChars;
+        if (!noAmb) a += ambUpper;
+      }
+      if (numbers){
+        a += nums;
+        if (!noAmb) a += ambNums;
+      }
+      if (symbols){
+        a += sym;
+      }
+      return a;
+    }
+
+    function generatePassword(len, opts){
+      const alphabet = buildAlphabet(opts);
+      if (!alphabet.length) return "";
+      let out = "";
+      for (let i=0; i<len; i++){
+        out += alphabet[cryptoRandomInt(alphabet.length)];
+      }
+      return out;
+    }
+
+    // Lightweight "strength" scoring (not a full zxcvbn replacement).
+    // Good enough to encourage better habits without external libs.
+    function scorePassword(pw){
+      if (!pw) return {score:0, label:"Empty", advice:"Type a password to get feedback."};
+
+      const length = pw.length;
+
+      const hasLower = /[a-z]/.test(pw);
+      const hasUpper = /[A-Z]/.test(pw);
+      const hasNumber = /[0-9]/.test(pw);
+      const hasSymbol = /[^A-Za-z0-9]/.test(pw);
+
+      // Penalties for common patterns
+      const hasRepeat = /(.)\1{2,}/.test(pw);                // aaa, 111
+      const hasSequence = /(?:0123|1234|2345|3456|4567|5678|6789)/.test(pw) ||
+                          /(?:abcd|bcde|cdef|defg|efgh|fghi|ghij|hijk|ijkl|jklm|klmn|lmno|mnop|nopq|opqr|pqrs|qrst|rstu|stuv|tuvw|uvwx|vwxy|wxyz)/i.test(pw);
+      const looksLikeWord = /^[A-Za-z]+$/.test(pw) && length <= 10;
+
+      // Base score by length
+      let score = 0;
+      if (length >= 8) score += 20;
+      if (length >= 12) score += 25;
+      if (length >= 16) score += 25;
+      if (length >= 20) score += 15;
+
+      // Variety
+      score += (hasLower ? 10 : 0);
+      score += (hasUpper ? 10 : 0);
+      score += (hasNumber ? 10 : 0);
+      score += (hasSymbol ? 10 : 0);
+
+      // Penalties
+      if (hasRepeat) score -= 15;
+      if (hasSequence) score -= 15;
+      if (looksLikeWord) score -= 20;
+
+      // Clamp 0..100
+      score = Math.max(0, Math.min(100, score));
+
+      let label = "Weak";
+      let advice = "Use 16+ characters and avoid patterns. Turn on MFA for important accounts.";
+      if (score >= 70){
+        label = "Strong";
+        advice = "Good. Make sure it's unique per site and stored in a password manager.";
+      } else if (score >= 45){
+        label = "Okay";
+        advice = "Increase length (16+) and add uniqueness. Avoid reused passwords.";
+      }
+
+      return {score, label, advice};
+    }
+
+    // Passphrase generator (small built-in list to keep everything offline)
+    const WORDS = [
+      "texas","river","cactus","bluebonnet","trail","ranch","sunset","prairie","mesa","storm",
+      "longhorn","lantern","wagon","guitar","coffee","signal","horizon","windmill","saddle","ridge",
+      "barbecue","wildflower","sparrow","comet","starlight","bonfire","breeze","canyon","campfire","oak"
+    ];
+    function generatePassphrase(wordCount, separator){
+      const words = [];
+      for (let i=0; i<wordCount; i++){
+        words.push(WORDS[cryptoRandomInt(WORDS.length)]);
+      }
+      // Capitalize one word sometimes for variety
+      if (wordCount >= 3){
+        const idx = cryptoRandomInt(wordCount);
+        words[idx] = words[idx].charAt(0).toUpperCase() + words[idx].slice(1);
+      }
+      // Add a number at end sometimes
+      const n = cryptoRandomInt(90) + 10; // 10..99
+      return words.join(separator) + separator + n;
+    }
+
+    function setMeter(score){
+      const bar = $("#meterBar");
+      const badge = $("#scoreBadge");
+      const label = $("#scoreLabel");
+
+      bar.style.width = score + "%";
+      let color = "var(--bad)";
+      if (score >= 70) color = "var(--ok)";
+      else if (score >= 45) color = "var(--warn)";
+      bar.style.background = color;
+
+      badge.textContent = "Score: " + score;
+      label.textContent = score >= 70 ? "Looks strong" : (score >= 45 ? "Decent, can improve" : "Needs improvement");
+    }
+
+    function refreshModeUI(){
+      const mode = $("#mode").value;
+      $("#randomOptions").style.display = mode === "random" ? "grid" : "none";
+      $("#phraseOptions").style.display = mode === "passphrase" ? "grid" : "none";
+      $("#len").disabled = mode !== "random";
+    }
+
+    $("#mode").addEventListener("change", refreshModeUI);
+    refreshModeUI();
+
+    $("#genBtn").addEventListener("click", () => {
+      const mode = $("#mode").value;
+      let value = "";
+
+      if (mode === "passphrase"){
+        const wc = Math.max(3, Math.min(8, parseInt($("#wordCount").value || "4", 10)));
+        const sep = $("#separator").value;
+        value = generatePassphrase(wc, sep);
+      } else {
+        const len = Math.max(12, Math.min(64, parseInt($("#len").value || "20", 10)));
+        const opts = {
+          upper: $("#optUpper").checked,
+          numbers: $("#optNumbers").checked,
+          symbols: $("#optSymbols").checked,
+          noAmb: $("#optNoAmb").checked
+        };
+        value = generatePassword(len, opts);
+      }
+
+      $("#generated").textContent = value || "Select at least one option.";
+      // Also update strength meter quickly (without forcing user to type)
+      const s = scorePassword(value);
+      setMeter(s.score);
+      $("#scoreBadge").textContent = "Score: " + s.score + " (" + s.label + ")";
+      $("#scoreLabel").textContent = s.advice;
+      $("#advice").textContent = s.advice;
+    });
+
+    $("#copyBtn").addEventListener("click", async () => {
+      const text = $("#generated").textContent || "";
+      if (!text || text === 'Click "Generate"' || text === "Select at least one option.") return;
+      try{
+        await navigator.clipboard.writeText(text);
+        $("#copyBtn").textContent = "Copied";
+        setTimeout(() => $("#copyBtn").textContent = "Copy", 1100);
+      }catch(e){
+        alert("Copy failed. You can manually select and copy the password.");
+      }
+    });
+
+    $("#checkInput").addEventListener("input", (e) => {
+      const pw = e.target.value || "";
+      const s = scorePassword(pw);
+      setMeter(s.score);
+      $("#scoreBadge").textContent = "Score: " + s.score + " (" + s.label + ")";
+      $("#scoreLabel").textContent = s.advice;
+      $("#advice").textContent = s.advice;
+    });
+
+    // Hamburger menu toggle
+    (function () {
+      const btn = document.querySelector('.hamburger');
+      const menu = document.getElementById('navMenu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        menu.classList.toggle('open');
+      });
+    })();
+  </script>
+</body>
+</html>

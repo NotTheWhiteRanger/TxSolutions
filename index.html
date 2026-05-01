@@ -1,574 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Texan Support & Solutions | Reliable IT Support in Eastland, TX</title>
-  <meta name="description" content="Texan Support & Solutions provides professional computer repair, cybersecurity, and IT services for homes and small businesses across Eastland, TX & surrounding areas." />
-  <meta name="theme-color" content="#1e3a5f" />
-  <link rel="canonical" href="https://solutionstx.com/" />
-
-  <!-- LocalBusiness structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Texan Support & Solutions",
-    "telephone": "+1-254-442-0796",
-    "url": "https://solutionstx.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Eastland",
-      "addressRegion": "TX",
-      "addressCountry": "US"
-    },
-    "areaServed": "Eastland, TX and surrounding communities",
-    "description": "Computer repair, cybersecurity, networking, and small-business IT services."
-  }
-  </script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texan Support & Solutions | Residential IT & Home Cybersecurity</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    :root{
-      --bg: #f0f4f8;
-      --surface: #ffffff;
-      --muted: #64748b;
-      --brand: #1e3a5f;
-      --brand-2: #2b78c8;
-      --accent: #163459;
-      --max-w: 1200px;
+    body { font-family: system-ui, -apple-system, sans-serif; }
+    .hero-bg { 
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                  url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat; 
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      color: #2d3748;
-      background: var(--bg);
-      line-height: 1.7;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-    }
-    /* Skip link */
-    .skip-link{
-      position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
-    }
-    .skip-link:focus{
-      left: 1rem; top: 1rem; width: auto; height: auto; padding: .5rem .75rem; background:#fff; border-radius:6px; box-shadow:0 4px 16px rgba(0,0,0,.12); z-index:2000;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-    /* Navigation */
-    nav.primary { display:flex; align-items:center; gap:1rem; }
-    .nav-links{ display:flex; gap:.5rem; list-style:none; align-items:center; }
-    .nav-links a{ color:var(--muted); text-decoration:none; padding:.5rem .75rem; border-radius:6px; font-size:.95rem; font-weight:500; }
-    .nav-links a:hover, .nav-links a:focus{ background:rgba(43,120,200,.08); color:var(--brand); outline:none; }
-    .nav-toggle{ display:none; background:none; border:0; font-size:1.25rem; padding:.5rem; color:var(--brand-2); cursor:pointer; }
-    @media (max-width:880px){ .nav-links{ display:none; } .nav-toggle{ display:inline-flex; } .header-content{ justify-content:space-between; } }
-
-    /* Header */
-    header {
-      background: #fff;
-      box-shadow: 0 1px 0 #e2e8f0, 0 2px 12px rgba(0,0,0,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-content {
-      display: flex; justify-content: space-between; align-items: center; padding: .75rem 0;
-    }
-    .logo {
-      display: flex; align-items: center; gap: .75rem;
-      text-decoration: none;
-    }
-    .logo img { width: 56px; height: 56px; object-fit: contain; }
-    .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
-    .logo-name { font-size: 1.15rem; font-weight: 700; color: var(--brand); }
-    .logo-tagline { font-size: .8rem; color: var(--muted); font-weight: 400; }
-    .phone-number { color: var(--brand); font-weight: 700; text-decoration: none; font-size: 1rem; padding: .5rem .75rem; border-radius: 6px; }
-    .phone-number:hover { color: var(--brand-2); background: rgba(43,120,200,.06); }
-
-    /* Hero */
-    .hero {
-      background: linear-gradient(160deg, #1a3558 0%, #1e4d8c 60%, #2563a8 100%);
-      color: white; text-align: center; padding: 5rem 0 4.5rem;
-    }
-    .hero-logo {
-      width: 140px; height: 140px; object-fit: contain;
-      margin: 0 auto 1.75rem;
-      display: block;
-      filter: drop-shadow(0 4px 24px rgba(0,0,0,0.35));
-    }
-    .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: .5rem; letter-spacing: -.5px; }
-    .hero .subtitle { font-size: 1.25rem; color: #bfdbfe; margin-bottom: 1.25rem; font-weight: 400; }
-    .hero .description {
-      font-size: 1.05rem; max-width: 560px; margin: 0 auto 2.5rem; color: rgba(255,255,255,.82); line-height: 1.75;
-    }
-    .cta-button {
-      display: inline-block; background: var(--brand-2); color: white;
-      padding: .9rem 2.25rem; border-radius: 8px; font-weight: 600; font-size: 1.05rem;
-      text-decoration: none; transition: background .2s ease, transform .15s ease;
-      box-shadow: 0 4px 18px rgba(43,120,200,0.45);
-    }
-    .cta-button:hover { background: #1d5fa5; transform: translateY(-2px); }
-    .cta-button:focus{ outline:3px solid rgba(43,120,200,.35); outline-offset:3px; }
-
-    /* Services */
-    .services { background: var(--surface); padding: 5rem 0; }
-    .section-header { text-align: center; margin-bottom: 3.5rem; }
-    .section-title { font-size: 2rem; color: var(--brand); margin-bottom: .6rem; font-weight: 700; }
-    .section-subtitle { color: var(--muted); font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem;
-    }
-    .service-icon{
-      width: 44px; height: 44px; flex-shrink: 0;
-      fill: none; stroke: var(--brand-2); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
-    }
-    .service-card .title-row{ display:flex; align-items:center; gap:.85rem; margin-bottom:.85rem; }
-    .service-card {
-      background: #fff; border: 1px solid #dde5f0; border-radius: 14px; padding: 1.75rem;
-      transition: box-shadow .25s ease, transform .25s ease;
-    }
-    .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(30,58,95,0.12); border-color: #b8cde8; }
-    .service-card h3 { color: var(--brand); font-size: 1.1rem; font-weight: 600; }
-    .service-card p { color: #4a5568; line-height: 1.7; font-size: .97rem; }
-
-    /* Contact Section */
-    .contact { background: var(--bg); text-align: center; padding: 4.5rem 0; }
-    .contact h2 { font-size: 2rem; color: var(--brand); font-weight: 700; margin-bottom: .75rem; }
-    .contact > .container > p { font-size: 1.05rem; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem; }
-    .contact-details {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2.5rem 0;
-    }
-    .contact-card {
-      background: var(--surface); border: 1px solid #dde5f0; border-radius: 14px; padding: 1.75rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-    }
-    .contact-card h3 { color: var(--brand); font-size: 1rem; font-weight: 700; margin-bottom: .6rem; text-transform: uppercase; letter-spacing: .04em; font-size: .85rem; }
-    .contact-card p { color: #4a5568; font-size: 1rem; }
-    .contact-card a { color: var(--brand-2); text-decoration: none; font-weight: 600; font-size: 1.05rem; }
-    .contact-card a:hover { color: var(--brand); }
-    .contact-card a:focus{ outline:2px solid rgba(43,120,200,.2); border-radius:4px; }
-
-    /* Email Us (Form) */
-    .contact-form-card{
-      max-width: 680px; margin: 2.5rem auto 0; background:#fff;
-      border:1px solid #dde5f0; border-radius:16px; padding:2rem 2.5rem;
-      box-shadow: 0 4px 24px rgba(30,58,95,0.08);
-    }
-    .form-header{ margin-bottom:1.25rem; }
-    .form-title{ font-size:1.25rem; font-weight:700; color:var(--brand); }
-
-    .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:.75rem; }
-    @media (max-width:768px){ .form-grid{ grid-template-columns:1fr; } }
-
-    .field{ position:relative; }
-    .input, .textarea{
-      width:100%; padding:13px 12px; border:1.5px solid #cbd5e1; border-radius:10px; background:#fff;
-      outline:none; font-size:.97rem; color:#2d3748; transition:border .2s, box-shadow .2s;
-      resize: none;
-    }
-    .input:focus, .textarea:focus{ border-color: var(--brand-2); box-shadow:0 0 0 3px rgba(43,120,200,.12); }
-
-    .label{
-      position:absolute; left:12px; top:13px; padding:0 4px; background:#fff; color:#94a3b8; pointer-events:none;
-      transform-origin:left top; transition:transform .15s, color .15s, top .15s; font-size:.97rem;
-    }
-    .input::placeholder, .textarea::placeholder{ color:transparent; }
-    .input:focus + .label, .input:not(:placeholder-shown) + .label,
-    .textarea:focus + .label, .textarea:not(:placeholder-shown) + .label{
-      top:-8px; transform:scale(.82); color: var(--brand);
-    }
-
-    .actions{ display:flex; align-items:center; justify-content:space-between; gap:1rem; margin-top:1rem; }
-    .privacy{ color:#94a3b8; font-size:.85rem; }
-    .btn-send{
-      appearance:none; border:0; background: var(--brand-2); color:#fff; font-weight:700; border-radius:10px;
-      padding:.8rem 1.5rem; cursor:pointer; font-size:.97rem;
-      box-shadow:0 4px 14px rgba(43,120,200,.3); transition:background .2s, transform .1s;
-    }
-    .btn-send:hover{ background:#1d5fa5; transform:translateY(-1px); }
-    .btn-send[disabled]{ opacity:.6; cursor:not-allowed; transform:none; }
-
-    #formStatus{ margin-top:1rem; font-weight:600; text-align:center; }
-    .status-ok{ color:#166534; }
-    .status-err{ color:#991b1b; }
-
-    .form-divider{ height:1px; background:linear-gradient(90deg, transparent, #e2e8f0, transparent); margin:1.25rem 0; }
-
-    /* Footer */
-    footer { background: var(--brand); color: white; padding: 2.5rem 0; }
-    .footer-grid{ display:grid; grid-template-columns:1fr 1fr; gap:2rem; max-width:var(--max-w); margin:0 auto; align-items:start; padding: 0 24px; }
-    .footer-col{ text-align:left; }
-    footer p { font-size: 0.9rem; color: rgba(255,255,255,.8); }
-    .footer-links{ list-style:none; padding:0; display:flex; flex-direction:column; gap:.5rem; margin-top:.5rem; }
-    .footer-links a{ color:rgba(255,255,255,.8); text-decoration:none; font-size:.9rem; }
-    .footer-links a:hover{ color:#fff; text-decoration:underline; }
-    .footer-bottom{ grid-column:1 / -1; border-top:1px solid rgba(255,255,255,.12); margin-top:1rem; padding-top:1rem; text-align:center; }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .header-content { flex-direction: column; text-align: center; gap: .75rem; }
-      .hero { padding: 3.5rem 0 3rem; }
-      .hero-logo { width: 110px; height: 110px; }
-      .hero h1 { font-size: 1.9rem; }
-      .hero .subtitle { font-size: 1.1rem; }
-      .hero .description { font-size: .97rem; padding: 0 .5rem; }
-      .services-grid, .contact-details { grid-template-columns: 1fr; gap: 1.25rem; }
-      .footer-grid{ grid-template-columns:1fr; text-align:center; }
-      .footer-col{ text-align:center; }
-      .contact-form-card{ padding: 1.5rem; }
-    }
+    .section-header { font-size: 2.75rem; line-height: 1.1; }
   </style>
 </head>
+<body class="bg-zinc-50 text-zinc-900">
 
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="header-content">
-        <a class="logo" href="#main">
-          <img src="Images/Logo.png" alt="Texan Support & Solutions Logo" loading="lazy" />
-          <div class="logo-text">
-            <span class="logo-name">Texan Support & Solutions</span>
-            <span class="logo-tagline">Eastland, TX &amp; Surrounding Areas</span>
-          </div>
-        </a>
-        <nav class="primary" aria-label="Primary navigation">
-          <button class="nav-toggle" aria-controls="site-navigation" aria-expanded="false" aria-label="Open menu">☰</button>
-          <ul id="site-navigation" class="nav-links">
-            <li><a href="#main">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="tel:+12544420796" class="phone-number" aria-label="Call Texan Support and Solutions">(254) 442-0796</a></li>
-          </ul>
-        </nav>
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm sticky top-0 z-50 border-b">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <h1 class="text-2xl font-bold text-blue-700">Texan Support & Solutions</h1>
       </div>
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#services" class="hover:text-blue-600 transition">Services</a>
+        <a href="#cyber" class="hover:text-blue-600 transition">Cybersecurity</a>
+        <a href="#how" class="hover:text-blue-600 transition">How It Works</a>
+        <a href="#book" class="hover:text-blue-600 transition">Book Now</a>
+      </div>
+      <a href="#book" class="bg-blue-700 hover:bg-blue-800 text-white px-7 py-3 rounded-2xl text-sm font-semibold transition">
+        Request a Visit
+      </a>
     </div>
-  </header>
+  </nav>
 
-  <main id="main">
   <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <img src="Images/Logo.png" class="hero-logo" alt="Texan Support & Solutions" />
-      <h1>Reliable IT Support in Eastland, TX</h1>
-      <p class="subtitle">Texan Support &amp; Solutions</p>
-      <p class="description">Your trusted local experts for computer repair, cybersecurity, networking, and small-business IT services — fast, friendly, and professional.</p>
-      <a href="#contact" class="cta-button">Get Support Now</a>
+  <section class="hero-bg h-screen flex items-center text-white">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <p class="uppercase tracking-widest text-sm mb-4 text-blue-300">Local • Secure • Straightforward</p>
+      <h2 class="text-6xl md:text-7xl font-bold leading-none mb-8">
+        Fast home tech support<br>— done the secure way
+      </h2>
+      <p class="text-2xl max-w-3xl mx-auto mb-12">
+        We fix Wi-Fi dead zones, clean up slow PCs, secure smart homes, and help remote workers stay protected. 
+        Clear pricing and friendly Texas service you can actually understand.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-5 justify-center">
+        <a href="#book" class="bg-white text-blue-700 px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-zinc-100 inline-flex items-center justify-center gap-3">
+          <i class="fa-solid fa-calendar"></i> Book a Visit
+        </a>
+        <a href="#services" class="border-2 border-white text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10">
+          Explore Services
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Services -->
-  <section class="services">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">Our Services</h2>
-        <p class="section-subtitle">Expert technology solutions for homes and small businesses</p>
+  <section id="services" class="py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-header font-semibold">Residential Services</h2>
+        <p class="mt-4 text-xl text-zinc-600 max-w-2xl mx-auto">
+          Reliable home tech support built for Texas families and home offices — with security always in mind.
+        </p>
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            <h3>Computer Repair & Optimization</h3>
-          </div>
-          <p>Full diagnostics, hardware replacement, OS repair, and performance tuning to keep your system running like new.</p>
+
+      <div class="grid md:grid-cols-2 gap-x-12 gap-y-16">
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">Whole-Home Wi-Fi</h3>
+          <p class="text-lg text-zinc-600">Dead zone fixes, mesh system installs, smart router placement, and speed optimization so every room in your house stays connected reliably.</p>
         </div>
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-            <h3>Network & Wi-Fi Setup</h3>
-          </div>
-          <p>Secure, high-speed Wi-Fi installation, troubleshooting, and optimization for reliable coverage everywhere you need it.</p>
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">Secure Router Setup</h3>
+          <p class="text-lg text-zinc-600">Latest firmware, strong encryption (WPA3), isolated guest network, safe DNS, and admin lockdown — making your network much harder to breach.</p>
         </div>
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            <h3>Cybersecurity & Virus Protection</h3>
-          </div>
-          <p>Malware removal, system hardening, and proactive monitoring to safeguard your data and privacy.</p>
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">PC & Mac Tune-Ups</h3>
+          <p class="text-lg text-zinc-600">Remove bloat, update everything, improve performance, and set up safer defaults so your computers run faster and more securely.</p>
         </div>
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            <h3>Smart Device & Mobile Support</h3>
-          </div>
-          <p>Setup, sync, and troubleshooting for smartphones, tablets, and smart-home devices across platforms.</p>
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">Remote Work & Home Office</h3>
+          <p class="text-lg text-zinc-600">Stable video calls, reliable printers, secure remote access, and network tweaks that make working from home frustration-free.</p>
         </div>
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-            <h3>Business IT Solutions</h3>
-          </div>
-          <p>Custom technology support for small businesses: servers, backups, cloud systems, and remote management.</p>
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">Smart Home Organization</h3>
+          <p class="text-lg text-zinc-600">Professional setup and cleanup of doorbells, cameras, assistants, and other devices — with proper network isolation for safety.</p>
         </div>
-        <div class="service-card">
-          <div class="title-row">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            <h3>On-Site Service Calls</h3>
-          </div>
-          <p>Local, same-day support available across Eastland, Cisco, Ranger, and surrounding Texas communities.</p>
+        <div>
+          <h3 class="text-3xl font-semibold mb-4">Backup & Recovery</h3>
+          <p class="text-lg text-zinc-600">Simple, tested backup plans for family photos, documents, and important files so you never lose what matters.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2>Need Help Fast?</h2>
-      <p>Contact Texan Support & Solutions today for expert IT service that gets you back up and running quickly.</p>
-
-      <div class="contact-details">
-        <div class="contact-card">
-          <h3>Service Area</h3>
-          <p>Eastland, TX</p>
-          <p>& Surrounding Communities</p>
-        </div>
-        <div class="contact-card">
-          <h3>Call Us</h3>
-          <p><a href="tel:+12544420796">(254) 442-0796</a></p>
-        </div>
-        <div class="contact-card">
-          <h3>Website</h3>
-          <p>solutionstx.com</p>
-          <p class="muted-text" style="margin-top:.25rem;color:var(--muted);">You are viewing this site right now.</p>
-        </div>
+  <!-- Cybersecurity -->
+  <section id="cyber" class="py-24 bg-zinc-900 text-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="section-header font-semibold text-white">Home Cybersecurity — Plain English</h2>
+        <p class="mt-4 text-xl text-zinc-400 max-w-2xl mx-auto">
+          Security that fits real households — without breaking your devices or complicating your life.
+        </p>
       </div>
 
-      <a href="tel:+12544420796" class="cta-button">Call Now for Support</a>
-
-      <!-- Email Us Section -->
-      <div class="contact-form-card" aria-labelledby="email-us">
-        <div class="form-header">
-          <h3 id="email-us" class="form-title">Email Us</h3>
+      <div class="grid md:grid-cols-2 gap-12">
+        <div class="flex gap-6">
+          <i class="fa-solid fa-network-wired text-4xl text-green-500 mt-1"></i>
+          <div>
+            <h3 class="text-2xl font-semibold mb-3">Guest & Smart Device Separation</h3>
+            <p class="text-zinc-400">Keep visitors and IoT gadgets on their own network, away from your personal computers and sensitive data.</p>
+          </div>
         </div>
-
-        <form id="contactForm" novalidate>
-          <!-- Honeypot -->
-          <input type="text" name="company" id="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;" aria-hidden="true">
-
-          <div class="form-grid">
-            <div class="field">
-              <input class="input" id="name" name="name" type="text" placeholder=" " required aria-required="true" autocomplete="name">
-              <label class="label" for="name">Your Name</label>
-            </div>
-            <div class="field">
-              <input class="input" id="email" name="email" type="email" placeholder=" " required aria-required="true" inputmode="email" autocomplete="email">
-              <label class="label" for="email">Email Address</label>
-            </div>
+        <div class="flex gap-6">
+          <i class="fa-solid fa-user-shield text-4xl text-green-500 mt-1"></i>
+          <div>
+            <h3 class="text-2xl font-semibold mb-3">Account Protection</h3>
+            <p class="text-zinc-400">Enable multi-factor authentication on email, banking, shopping, and cloud accounts.</p>
           </div>
-
-          <div class="form-grid" style="margin-top:1rem;">
-            <div class="field">
-              <input class="input" id="phone" name="phone" type="tel" placeholder=" " inputmode="tel" autocomplete="tel">
-              <label class="label" for="phone">Phone Number (optional)</label>
-            </div>
-            <div class="field" style="display:flex;align-items:center;">
-              <div style="width:100%;">
-                <div style="margin-bottom:.4rem;font-weight:600;color:var(--muted);">Preferred contact method</div>
-                <label style="margin-right:1rem;"><input type="radio" name="preferred" value="email" checked> Email</label>
-                <label><input type="radio" name="preferred" value="phone"> Phone</label>
-              </div>
-            </div>
+        </div>
+        <div class="flex gap-6">
+          <i class="fa-solid fa-arrows-rotate text-4xl text-green-500 mt-1"></i>
+          <div>
+            <h3 class="text-2xl font-semibold mb-3">Keep Everything Updated</h3>
+            <p class="text-zinc-400">Regular patching for routers, phones, tablets, TVs, and computers — closing the gaps scammers use.</p>
           </div>
-
-          <div class="field" style="margin-top:1rem;">
-            <textarea class="textarea" id="message" name="message" rows="6" placeholder=" " required aria-required="true"></textarea>
-            <label class="label" for="message">How can we help?</label>
+        </div>
+        <div class="flex gap-6">
+          <i class="fa-solid fa-key text-4xl text-green-500 mt-1"></i>
+          <div>
+            <h3 class="text-2xl font-semibold mb-3">Safer Password Habits</h3>
+            <p class="text-zinc-400">Unique strong passphrases made easy with a password manager. No more reusing the same password everywhere.</p>
           </div>
-
-          <div class="form-divider"></div>
-
-          <div class="actions">
-            <p class="privacy">By sending, you agree to our service terms.</p>
-            <button type="submit" class="btn-send" id="sendBtn">Send Message</button>
-          </div>
-        </form>
-
-        <p id="formStatus" role="status" aria-live="polite"></p>
-        <noscript>
-          <p style="text-align:center;color:#991b1b;font-weight:600;margin-top:1rem;">JavaScript is disabled — to contact us call (254) 442-0796.</p>
-        </noscript>
+        </div>
       </div>
     </div>
   </section>
 
-  </main>
+  <!-- How It Works -->
+  <section id="how" class="py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <h2 class="section-header font-semibold mb-6">How It Works</h2>
+      <p class="text-xl text-zinc-600 mb-16">Simple, transparent process from start to finish.</p>
+
+      <div class="grid md:grid-cols-4 gap-10">
+        <div class="text-left">
+          <div class="text-5xl font-bold text-blue-200 mb-4">01</div>
+          <h4 class="font-semibold text-xl mb-3">Tell Us What's Wrong</h4>
+          <p class="text-zinc-600">Wi-Fi issues, slow devices, smart home problems, or security concerns — describe it in your own words.</p>
+        </div>
+        <div class="text-left">
+          <div class="text-5xl font-bold text-blue-200 mb-4">02</div>
+          <h4 class="font-semibold text-xl mb-3">We Schedule & Quote</h4>
+          <p class="text-zinc-600">Quick response with available times and clear upfront pricing.</p>
+        </div>
+        <div class="text-left">
+          <div class="text-5xl font-bold text-blue-200 mb-4">03</div>
+          <h4 class="font-semibold text-xl mb-3">On-Site Visit</h4>
+          <p class="text-zinc-600">We come to your home, fix the issue properly, and explain everything in plain English.</p>
+        </div>
+        <div class="text-left">
+          <div class="text-5xl font-bold text-blue-200 mb-4">04</div>
+          <h4 class="font-semibold text-xl mb-3">Peace of Mind</h4>
+          <p class="text-zinc-600">Faster, more reliable, and more secure home tech — with tips to keep it that way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="book" class="py-24 bg-zinc-100">
+    <div class="max-w-2xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="section-header font-semibold">Book a Residential Visit</h2>
+        <p class="mt-4 text-lg text-zinc-600">We'll reply fast with scheduling options and a clear estimate.</p>
+      </div>
+
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="bg-white p-10 md:p-12 rounded-3xl shadow">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">Your Name</label>
+            <input type="text" name="name" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Phone</label>
+            <input type="tel" name="phone" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+          </div>
+        </div>
+        <div class="mt-6">
+          <label class="block text-sm font-medium mb-2">Email</label>
+          <input type="email" name="email" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+        </div>
+        <div class="mt-6">
+          <label class="block text-sm font-medium mb-2">Your City / Area in Texas</label>
+          <input type="text" name="location" placeholder="e.g. Eastland, Abilene, Dallas, Houston..." class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+        </div>
+        <div class="mt-6">
+          <label class="block text-sm font-medium mb-2">What's going on? (Be as detailed as you like)</label>
+          <textarea name="message" rows="6" placeholder="Wi-Fi is weak upstairs... Smart doorbell keeps going offline..." class="w-full px-6 py-4 border border-zinc-300 rounded-3xl focus:border-blue-600 outline-none resize-y"></textarea>
+        </div>
+
+        <p class="text-xs text-zinc-500 mt-6 mb-8">
+          Security note: Do not send passwords, recovery codes, or sensitive info. We will never ask for them through the form or email.
+        </p>
+
+        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-5 rounded-2xl text-lg font-semibold">
+          Send My Request
+        </button>
+      </form>
+
+      <p class="text-center mt-10 text-zinc-600">
+        Prefer to talk? Call or text: <strong>[Add Your Phone Number Here]</strong>
+      </p>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4 style="color:#fff;margin-bottom:.5rem;font-size:1rem;">Texan Support &amp; Solutions</h4>
-        <p>Local IT support in Eastland, TX — computer repair, networking, and cybersecurity.</p>
-        <p style="margin-top:.6rem;font-weight:700;color:#fff;">Call: <a href="tel:+12544420796" style="color:#bfdbfe;text-decoration:none;">(254) 442-0796</a></p>
-      </div>
-      <div class="footer-col">
-        <h4 style="color:#fff;margin-bottom:.5rem;font-size:1rem;">Quick Links</h4>
-        <ul class="footer-links" aria-label="Footer quick links">
-          <li><a href="#main">Home</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Texan Support &amp; Solutions. Professional IT Services in Eastland, TX.</p>
-      </div>
+  <footer class="bg-zinc-900 text-zinc-400 py-16">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <p class="text-2xl font-semibold text-white mb-2">Texan Support & Solutions</p>
+      <p class="mb-8">Local residential IT support and home cybersecurity across Texas</p>
+      <p class="text-sm">© 2026 Texan Support & Solutions. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script>
-    // Smooth scroll for internal anchors
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', e => {
-        const href = anchor.getAttribute('href');
-        if (href === '#') return; // ignore empty hash
-        e.preventDefault();
-        const target = document.querySelector(href);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Fade-in animation for service cards
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.service-card').forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(20px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(card);
-    });
-
-    // Mobile nav toggle
-    (function(){
-      const toggle = document.querySelector('.nav-toggle');
-      const nav = document.getElementById('site-navigation');
-      if (!toggle || !nav) return;
-      toggle.addEventListener('click', function(){
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', String(!expanded));
-        if (!expanded){
-          nav.style.display = 'flex';
-          nav.style.flexDirection = 'column';
-          nav.style.background = 'white';
-          nav.style.position = 'absolute';
-          nav.style.right = '20px';
-          nav.style.top = '64px';
-          nav.style.padding = '1rem';
-          nav.style.borderRadius = '8px';
-          nav.style.boxShadow = '0 6px 20px rgba(0,0,0,.12)';
-        } else {
-          nav.style.display = '';
-          nav.style.position = '';
-        }
-      });
-      window.addEventListener('resize', ()=>{ if (window.innerWidth > 880){ nav.style.display = ''; toggle.setAttribute('aria-expanded','false'); } });
-    })();
-
-        // Contact Form Handler (improved)
-    (function(){
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('formStatus');
-      const btn = document.getElementById('sendBtn');
-      const endpoint = 'https://script.google.com/macros/s/AKfycbyyMhkP-8n0DDKSdhcr18cMIo_MvOCYnbeVbHNm8fa3RZv-K6KF3HZL8czLbdN4JayP0g/exec';
-
-      function isValidEmail(email){
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      }
-
-      async function sendData(formData){
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000); // 10s
-        try{
-          const resp = await fetch(endpoint, { method: 'POST', body: formData, signal: controller.signal });
-          clearTimeout(timeout);
-          return resp;
-        }catch(err){
-          clearTimeout(timeout);
-          throw err;
-        }
-      }
-
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-
-        // Honeypot: if filled, silently drop
-        if (form.company && form.company.value.trim() !== '') return;
-
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const phone = form.phone ? form.phone.value.trim() : '';
-        const preferred = form.preferred ? form.preferred.value : 'email';
-        const message = form.message.value.trim();
-
-        if (!name || !email || !message){
-          status.textContent = 'Please complete all fields.';
-          status.className = 'status-err';
-          status.setAttribute('aria-hidden', 'false');
-          return;
-        }
-
-        if (!isValidEmail(email)){
-          status.textContent = 'Please enter a valid email address.';
-          status.className = 'status-err';
-          return;
-        }
-
-        // If user prefers phone contact, require a phone number
-        if (preferred === 'phone' && !phone){
-          status.textContent = 'Please provide a phone number or choose Email as preferred contact.';
-          status.className = 'status-err';
-          return;
-        }
-
-        status.textContent = 'Sending...';
-        status.className = '';
-        btn.disabled = true;
-        btn.setAttribute('aria-busy', 'true');
-        form.setAttribute('aria-busy', 'true');
-
-        try{
-          // Build FormData explicitly to ensure phone and preferred method are included
-          const fd = new FormData(form);
-          fd.set('phone', phone || '');
-          fd.set('preferred', preferred || 'email');
-          // Add a combined message field so servers/scripts that only include one field will still get the details
-          fd.set('fullMessage', `Preferred contact: ${preferred}\nPhone: ${phone}\n\nMessage:\n${message}`);
-
-          const resp = await sendData(fd);
-          if (resp && resp.ok){
-            // Reflect preferred contact back to user for clarity
-            const contactLine = (preferred === 'phone' && phone) ? `We’ll contact you by phone at ${phone}.` : `We’ll contact you by email at ${email}.`;
-            status.textContent = `Message sent. ${contactLine}`;
-            status.className = 'status-ok';
-            form.reset();
-          } else {
-            status.textContent = 'Error sending message. Please try again.';
-            status.className = 'status-err';
-          }
-        }catch(err){
-          if (err.name === 'AbortError'){
-            status.textContent = 'Request timed out. Please try again.';
-          } else {
-            status.textContent = 'Network error. Please try again.';
-          }
-          status.className = 'status-err';
-        } finally {
-          btn.disabled = false;
-          btn.removeAttribute('aria-busy');
-          form.removeAttribute('aria-busy');
-        }
-      });
-    })();
-  </script>
 </body>
 </html>

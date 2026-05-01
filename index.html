@@ -70,9 +70,9 @@
 
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#about" class="nav-link text-zinc-600 hover:text-zinc-900">About</a>
-                <a href="#services" class="nav-link text-zinc-600 hover:text-zinc-900">Services</a>
-                <a href="#why-us" class="nav-link text-zinc-600 hover:text-zinc-900">Why Us</a>
-                <a href="#contact" class="nav-link text-zinc-600 hover:text-zinc-900">Contact</a>
+                <a href="services.html" class="nav-link text-zinc-600 hover:text-zinc-900">Services</a>
+                <a href="why-us.html" class="nav-link text-zinc-600 hover:text-zinc-900">Why Us</a>
+                <a href="contact.html" class="nav-link text-zinc-600 hover:text-zinc-900">Contact</a>
             </div>
 
             <div class="flex items-center gap-4">
@@ -81,7 +81,7 @@
                     <i class="fa-solid fa-phone"></i>
                     (254) 210-1117
                 </a>
-                <a href="#contact"
+                <a href="contact.html"
                    class="bg-red-700 hover:bg-red-800 transition-colors text-white px-6 py-3 rounded-2xl font-semibold text-sm flex items-center gap-2">
                     <i class="fa-solid fa-arrow-right"></i>
                     Get Support
@@ -109,12 +109,12 @@
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact"
+                <a href="contact.html"
                    class="bg-white text-zinc-900 hover:bg-zinc-100 px-8 py-4 rounded-3xl font-semibold text-lg inline-flex items-center justify-center gap-3 transition-all">
                     Start a Conversation
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
-                <a href="#services"
+                <a href="services.html"
                    class="border border-white/70 hover:bg-white/10 px-8 py-4 rounded-3xl font-semibold text-lg inline-flex items-center justify-center transition-all">
                     Explore Services
                 </a>
@@ -231,6 +231,14 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="text-center mt-12">
+                <a href="services.html"
+                   class="inline-flex items-center gap-2 border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white transition-colors px-8 py-3 rounded-2xl font-semibold text-sm">
+                    View all services
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -263,6 +271,13 @@
                             <p class="text-zinc-600">Based in Eastland, TX—serving Texas with reliable, responsive support.</p>
                         </div>
                     </div>
+                    <div class="pt-4">
+                        <a href="why-us.html"
+                           class="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-semibold transition-colors">
+                            Learn more about why we're different
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -270,66 +285,22 @@
 
     <!-- Contact -->
     <section id="contact" class="py-24 bg-zinc-900 text-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-5xl heading-font font-bold">Ready to get real support?</h2>
-                <p class="mt-4 text-xl text-zinc-400">Tell us what’s going on. We’ll follow up quickly.</p>
-                <p class="mt-3 text-zinc-400 text-sm">Security tip: Please don’t send passwords or sensitive personal info through this form.</p>
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-5xl heading-font font-bold">Ready to get real support?</h2>
+            <p class="mt-4 text-xl text-zinc-400">Tell us what's going on. We'll follow up quickly.</p>
+            <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html"
+                   class="inline-flex items-center justify-center gap-3 bg-red-700 hover:bg-red-600 transition-colors text-white px-10 py-4 rounded-3xl font-semibold text-lg">
+                    Go to Contact Page
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="tel:+12542101117"
+                   class="inline-flex items-center justify-center gap-3 border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white transition-colors px-10 py-4 rounded-3xl font-semibold text-lg">
+                    <i class="fa-solid fa-phone"></i>
+                    (254) 210-1117
+                </a>
             </div>
-
-            <form id="contactForm" class="space-y-8" onsubmit="handleSubmit(event)">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Your Name</label>
-                        <input type="text" id="name" required maxlength="80"
-                               class="w-full px-6 py-4 bg-zinc-800 border border-zinc-700 rounded-2xl focus:outline-none focus:border-red-600">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Phone Number</label>
-                        <input type="tel" id="phone" maxlength="30" placeholder="(254) 210-1117"
-                               class="w-full px-6 py-4 bg-zinc-800 border border-zinc-700 rounded-2xl focus:outline-none focus:border-red-600">
-                    </div>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email Address</label>
-                        <input type="email" id="email" required maxlength="120"
-                               class="w-full px-6 py-4 bg-zinc-800 border border-zinc-700 rounded-2xl focus:outline-none focus:border-red-600">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">What do you need help with?</label>
-                        <select id="service" required
-                                class="w-full px-6 py-4 bg-zinc-800 border border-zinc-700 rounded-2xl focus:outline-none focus:border-red-600">
-                            <option value="" selected disabled>Select one…</option>
-                            <option>Wi‑Fi / dead zones</option>
-                            <option>New router / secure setup</option>
-                            <option>PC/Mac cleanup</option>
-                            <option>Smart home setup</option>
-                            <option>Password / account security</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium mb-2">Details</label>
-                    <textarea id="message" rows="6" required maxlength="1200"
-                              class="w-full px-6 py-4 bg-zinc-800 border border-zinc-700 rounded-3xl focus:outline-none focus:border-red-600 resize-none"
-                              placeholder="What’s happening? (Device type, internet provider, router model if known, etc.)"></textarea>
-                </div>
-
-                <button type="submit"
-                        class="w-full bg-red-700 hover:bg-red-600 transition-colors py-5 rounded-3xl font-semibold text-lg flex items-center justify-center gap-3">
-                    SEND MESSAGE
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
-            </form>
-
-            <div class="mt-12 text-center text-zinc-400 text-sm">
-                <p>Eastland, TX • <a class="underline hover:text-white" href="tel:+12542101117">(254) 210-1117</a></p>
-                <p class="mt-1"><a class="underline hover:text-white" href="mailto:Support@solutionstx.com">Support@solutionstx.com</a></p>
-            </div>
+            <p class="mt-8 text-zinc-500 text-sm">Eastland, TX • <a class="underline hover:text-zinc-300" href="mailto:Support@solutionstx.com">Support@solutionstx.com</a></p>
         </div>
     </section>
 
@@ -355,15 +326,5 @@
         </div>
     </footer>
 
-    <script>
-        function handleSubmit(e) {
-            e.preventDefault();
-
-            // Security note: this demo form does not transmit data anywhere.
-            // If you later wire this up, ensure server-side validation, rate limiting, and CSRF protection.
-            alert("Thank you! Your message has been received. We'll contact you shortly.");
-            e.target.reset();
-        }
-    </script>
 </body>
 </html>

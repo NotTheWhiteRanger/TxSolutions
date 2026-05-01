@@ -1,230 +1,868 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Texan Support & Solutions | Residential IT & Home Cybersecurity</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Texan Support &amp; Solutions | Residential IT &amp; Home Cybersecurity</title>
+  <meta name="description" content="Residential Wi‑Fi, smart home setup, device cleanup, and home cybersecurity. Plus free tools: password generator + strength check." />
+  <meta name="theme-color" content="#2ea7ff" />
+
+  <!-- Stopgap security metas (best enforced as HTTP response headers) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; }
-    .hero-bg { 
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                  url('https://picsum.photos/id/1015/2000/1200') center/cover no-repeat; 
+    :root{
+      --bg:#f7f8fa;
+      --panel:#ffffff;
+      --text:#0d1117;
+      --muted:#57606a;
+      --line:rgba(0,0,0,.10);
+      --brand:#1558d6;
+      --brand-strong:#1c64f2;
+      --brand-deep:#1e3a8a;
+      --shadow:0 4px 16px rgba(0,0,0,.09);
+      --shadow-soft:0 2px 8px rgba(0,0,0,.06);
+      --radius:12px;
+      --max:1180px;
+      --ring:0 0 0 3px rgba(28,100,242,.22);
+      --ok:#16a34a;
+      --warn:#d97706;
+      --bad:#dc2626;
     }
-    .section-header { font-size: 2.75rem; line-height: 1.1; }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .wrap{ max-width:var(--max); margin:auto; padding:0 20px; }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    .skip-link{
+      position:absolute; left:14px; top:14px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      transform:translateY(-160%);
+      transition:transform .15s ease;
+      z-index:9999;
+      color:var(--text);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .skip-link:focus{ transform:translateY(0); outline:none; box-shadow:var(--shadow-soft), var(--ring); }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:#ffffff;
+      border-bottom:1px solid var(--line);
+      box-shadow:0 1px 3px rgba(0,0,0,.06);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo{
+      height:52px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+    }
+
+    .brand-title{ display:flex; flex-direction:column; line-height:1.1; }
+    .brand-title strong{ font-size:14px; letter-spacing:.2px; }
+    .brand-title span{ font-size:12px; color:var(--muted); }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    nav a{
+      padding:10px 12px;
+      border-radius:8px;
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      font-weight:500;
+      border:1px solid transparent;
+    }
+    nav a:hover{
+      color:var(--text);
+      background:rgba(28,100,242,.06);
+      border-color:rgba(28,100,242,.12);
+    }
+    nav a[aria-current="page"]{
+      color:var(--brand-strong);
+      background:rgba(28,100,242,.08);
+      border-color:rgba(28,100,242,.16);
+    }
+    nav a:focus-visible{ outline:none; box-shadow:var(--ring); }
+
+    .actions{ display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      background:none;
+      border:1px solid var(--line);
+      border-radius:10px;
+      cursor:pointer;
+      padding:8px 10px;
+      width:40px;
+      height:40px;
+    }
+    .hamburger span{
+      display:block;
+      width:20px;
+      height:2px;
+      background:var(--text);
+      border-radius:2px;
+      transition:transform .15s ease, opacity .15s ease;
+    }
+    .nav-menu{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 18px;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      cursor:pointer;
+      font-size:14px;
+      font-weight:600;
+      text-decoration:none;
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{ transform:translateY(-1px); box-shadow:var(--shadow-soft); }
+    .btn:focus-visible{ outline:none; box-shadow:var(--shadow-soft), var(--ring); }
+    .btn:active{ transform:translateY(0); box-shadow:none; }
+
+    .btn.primary{
+      border:none;
+      color:white;
+      background: var(--brand-strong);
+      box-shadow: 0 2px 8px rgba(28,100,242,.24);
+    }
+    .btn.primary:hover{ background: var(--brand-deep); box-shadow: 0 4px 12px rgba(28,100,242,.30); }
+
+    .btn.ghost{
+      background:transparent;
+      border:1px solid var(--line);
+    }
+
+    .btn.small{
+      padding:8px 14px;
+      border-radius:8px;
+      font-size:13px;
+    }
+
+    /* Hero */
+    .hero{ padding:72px 0 44px; }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 12px;
+      border-radius:8px;
+      border:1px solid rgba(28,100,242,.18);
+      background:rgba(28,100,242,.06);
+      color:var(--brand-deep);
+      font-size:13px;
+      font-weight:500;
+      width:max-content;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--brand-strong);
+    }
+
+    h1{
+      font-size:52px;
+      line-height:1.05;
+      margin:14px 0 14px;
+      letter-spacing:-0.02em;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:18px;
+      max-width: 62ch;
+      margin:0 0 18px;
+    }
+
+    .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
+
+    .trust{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .trust span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:8px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:0 1px 3px rgba(0,0,0,.05);
+      font-weight:500;
+    }
+
+    .shield{
+      width:14px;height:14px;
+      display:inline-block;
+      background:var(--brand-strong);
+      border-radius:4px;
+    }
+
+    .hero-panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      padding:22px;
+    }
+    .hero-panel h2{ margin:0 0 6px; font-size:16px; letter-spacing:.1px; font-weight:700; }
+    .hero-panel p{ margin:0 0 16px; font-size:13px; color:var(--muted); }
+
+    .mini{ display:grid; gap:10px; }
+    .mini .row{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px;
+      border-radius:10px;
+      background:var(--bg);
+      border:1px solid var(--line);
+    }
+    .icon{
+      width:36px;height:36px; border-radius:8px;
+      background:rgba(28,100,242,.08);
+      border:1px solid rgba(28,100,242,.14);
+      display:grid; place-items:center;
+      flex:0 0 auto;
+    }
+    .icon svg{ width:18px; height:18px; fill: var(--brand-strong); opacity:.9; }
+    .row strong{ display:block; font-size:13px; margin-bottom:3px; font-weight:600; }
+    .row span{ display:block; font-size:12px; color:var(--muted); }
+
+    /* Sections */
+    main{ padding-bottom: 20px; }
+    .section{ padding:54px 0; }
+    .section-title{
+      display:flex; align-items:end; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:28px;
+      letter-spacing:-0.01em;
+    }
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+      max-width: 80ch;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .card{
+      grid-column: span 6;
+      background:var(--panel);
+      padding:20px;
+      border-radius:var(--radius);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow-soft);
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: rgba(28,100,242,.20);
+    }
+    .card h3{ margin:0 0 8px; font-size:16px; font-weight:700; }
+    .card p{ margin:0; color:var(--muted); line-height:1.6; }
+    .card .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:12px;
+      padding:4px 10px;
+      border-radius:6px;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      color:var(--brand-deep);
+      background: rgba(28,100,242,.08);
+      border:1px solid rgba(28,100,242,.14);
+      width:max-content;
+    }
+
+    /* Tool area */
+    .tool{
+      grid-column: span 12;
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      padding:22px;
+      overflow:hidden;
+    }
+    .tool-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+      margin-top:14px;
+    }
+    .tool h3{ margin:0 0 6px; font-size:16px; }
+    .tool p{ margin:0; color:var(--muted); }
+
+    .fieldrow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+
+    label{ font-size:13px; color:var(--muted); display:block; margin-bottom:6px; font-weight:500; }
+    input, textarea, select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,.14);
+      background: var(--panel);
+      font: inherit;
+      color:var(--text);
+      outline:none;
+    }
+    input:focus, textarea:focus, select:focus{ box-shadow: var(--ring); border-color: rgba(28,100,242,.34); }
+
+    .stack{ display:grid; gap:12px; }
+    .row-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+    .output{
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:var(--bg);
+      padding:12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      word-break: break-word;
+    }
+
+    .meter{
+      height:8px;
+      border-radius:999px;
+      background: rgba(0,0,0,.08);
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.08);
+    }
+    .meter > div{
+      height:100%;
+      width:0%;
+      background: var(--bad);
+      transition: width .15s ease;
+    }
+    .scoreline{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      flex-wrap:wrap;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 10px;
+      border-radius:6px;
+      border:1px solid var(--line);
+      background:var(--panel);
+      color: var(--text);
+      font-weight:700;
+      font-size:12px;
+    }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* Contact */
+    .contact{
+      background: var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-soft);
+      padding:28px;
+    }
+    form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    textarea{ min-height: 110px; resize: vertical; grid-column: 1 / -1; }
+    .full{ grid-column: 1 / -1; }
+    .hint{ font-size:12px; color:var(--muted); margin-top:8px; }
+
+    .contact-alt{
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+    .contact-alt p{
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+    .contact-alt a{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand-strong);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+    }
+    .contact-alt a:hover{
+      background: rgba(28,100,242,.08);
+      border-color: rgba(28,100,242,.16);
+    }
+    .contact-alt a:focus-visible{
+      outline: none;
+      box-shadow: var(--ring);
+    }
+
+    footer{
+      margin-top: 40px;
+      padding:28px 0;
+      border-top:1px solid var(--line);
+      background:var(--panel);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 720px){
+      .hamburger{ display:flex; }
+      .nav-menu{
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        width:100%;
+        gap:4px;
+        padding-bottom:10px;
+      }
+      .nav-menu.open{ display:flex; }
+      nav{
+        flex-direction:column;
+        align-items:flex-start;
+        width:100%;
+        gap:2px;
+      }
+      nav a{ width:100%; }
+      .actions{
+        justify-content:flex-start;
+        flex-wrap:wrap;
+        padding-top:8px;
+        border-top:1px solid var(--line);
+        width:100%;
+      }
+    }
+
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      h1{ font-size:42px; }
+      .card{ grid-column: span 12; }
+      .tool-grid{ grid-template-columns: 1fr; }
+      form{ grid-template-columns: 1fr; }
+      .fieldrow{ grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior:auto; }
+      *{ transition:none !important; }
+    }
   </style>
 </head>
-<body class="bg-zinc-50 text-zinc-900">
 
-  <!-- Navigation -->
-  <nav class="bg-white shadow-sm sticky top-0 z-50 border-b">
-    <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <h1 class="text-2xl font-bold text-blue-700">Texan Support & Solutions</h1>
-      </div>
-      <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#services" class="hover:text-blue-600 transition">Services</a>
-        <a href="#cyber" class="hover:text-blue-600 transition">Cybersecurity</a>
-        <a href="#how" class="hover:text-blue-600 transition">How It Works</a>
-        <a href="#book" class="hover:text-blue-600 transition">Book Now</a>
-      </div>
-      <a href="#book" class="bg-blue-700 hover:bg-blue-800 text-white px-7 py-3 rounded-2xl text-sm font-semibold transition">
-        Request a Visit
-      </a>
-    </div>
-  </nav>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Hero -->
-  <section class="hero-bg h-screen flex items-center text-white">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <p class="uppercase tracking-widest text-sm mb-4 text-blue-300">Local • Secure • Straightforward</p>
-      <h2 class="text-6xl md:text-7xl font-bold leading-none mb-8">
-        Fast home tech support<br>— done the secure way
-      </h2>
-      <p class="text-2xl max-w-3xl mx-auto mb-12">
-        We fix Wi-Fi dead zones, clean up slow PCs, secure smart homes, and help remote workers stay protected. 
-        Clear pricing and friendly Texas service you can actually understand.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-5 justify-center">
-        <a href="#book" class="bg-white text-blue-700 px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-zinc-100 inline-flex items-center justify-center gap-3">
-          <i class="fa-solid fa-calendar"></i> Book a Visit
-        </a>
-        <a href="#services" class="border-2 border-white text-white px-10 py-5 rounded-2xl text-xl font-semibold hover:bg-white/10">
-          Explore Services
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section id="services" class="py-24 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="section-header font-semibold">Residential Services</h2>
-        <p class="mt-4 text-xl text-zinc-600 max-w-2xl mx-auto">
-          Reliable home tech support built for Texas families and home offices — with security always in mind.
-        </p>
+  <header>
+    <div class="wrap nav">
+      <div class="brand" aria-label="Texan Support and Solutions">
+        <img class="logo" src="Images/Logo.png" alt="Texan Support &amp; Solutions" />
       </div>
 
-      <div class="grid md:grid-cols-2 gap-x-12 gap-y-16">
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">Whole-Home Wi-Fi</h3>
-          <p class="text-lg text-zinc-600">Dead zone fixes, mesh system installs, smart router placement, and speed optimization so every room in your house stays connected reliably.</p>
-        </div>
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">Secure Router Setup</h3>
-          <p class="text-lg text-zinc-600">Latest firmware, strong encryption (WPA3), isolated guest network, safe DNS, and admin lockdown — making your network much harder to breach.</p>
-        </div>
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">PC & Mac Tune-Ups</h3>
-          <p class="text-lg text-zinc-600">Remove bloat, update everything, improve performance, and set up safer defaults so your computers run faster and more securely.</p>
-        </div>
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">Remote Work & Home Office</h3>
-          <p class="text-lg text-zinc-600">Stable video calls, reliable printers, secure remote access, and network tweaks that make working from home frustration-free.</p>
-        </div>
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">Smart Home Organization</h3>
-          <p class="text-lg text-zinc-600">Professional setup and cleanup of doorbells, cameras, assistants, and other devices — with proper network isolation for safety.</p>
-        </div>
-        <div>
-          <h3 class="text-3xl font-semibold mb-4">Backup & Recovery</h3>
-          <p class="text-lg text-zinc-600">Simple, tested backup plans for family photos, documents, and important files so you never lose what matters.</p>
+      <button class="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="navMenu">
+        <nav aria-label="Primary navigation">
+          <a href="#home-services">Home services</a>
+          <a href="#security">Cybersecurity</a>
+          <a href="free-tools.html">Free tools</a>
+          <a href="#contact">Book</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn ghost" href="free-tools.html">Use free tools</a>
+          <a class="btn primary" href="#contact">Book a Visit</a>
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- Cybersecurity -->
-  <section id="cyber" class="py-24 bg-zinc-900 text-white">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="section-header font-semibold text-white">Home Cybersecurity — Plain English</h2>
-        <p class="mt-4 text-xl text-zinc-400 max-w-2xl mx-auto">
-          Security that fits real households — without breaking your devices or complicating your life.
-        </p>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Local, security-minded help for homes &amp; home offices</span>
+          </div>
+
+          <h1 id="hero-title">Fast home tech support—done the secure way.</h1>
+          <p>
+            We fix Wi‑Fi dead zones, clean up slow PCs, secure smart homes, and help remote workers stay protected.
+            Clear pricing, friendly service, and security-first setups you can understand.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="#contact">Book a visit</a>
+            <a class="btn" href="free-tools.html">Try the free tools</a>
+          </div>
+
+          <div class="trust" aria-label="Trust indicators">
+            <span><i class="shield" aria-hidden="true"></i>Secure Wi‑Fi &amp; router setup</span>
+            <span><i class="shield" aria-hidden="true"></i>Family device protection</span>
+            <span><i class="shield" aria-hidden="true"></i>Smart home hardening</span>
+          </div>
+        </div>
+
+        <aside class="hero-panel" aria-label="Popular residential calls">
+          <h2>Popular calls</h2>
+          <p>Most jobs completed in one visit with a clean checklist.</p>
+
+          <div class="mini">
+            <div class="row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3zm0 18c-3.3-1.2-6-5.1-6-9V6.3L12 4l6 2.3V11c0 3.9-2.7 7.8-6 9z"/></svg>
+              </div>
+              <div>
+                <strong>Secure router &amp; Wi‑Fi</strong>
+                <span>WPA3, guest network, updates, and safer passwords.</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm2-8h4v6H5V5zm8 16h8V11h-8v10zm2-8h4v6h-4v-6zM3 21h8v-6H3v6zm2-4h4v2H5v-2zM13 3v6h8V3h-8zm2 2h4v2h-4V5z"/></svg>
+              </div>
+              <div>
+                <strong>Smart home setup</strong>
+                <span>Cameras, doorbells, TVs—organized and segmented.</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm-9 4 3-3 2 2 4-4 4 4 2-2 3 3-3 3-2-2-4 4-4-4-2 2-3-3z"/></svg>
+              </div>
+              <div>
+                <strong>Device cleanup</strong>
+                <span>Slow PC/Mac, malware checks, updates, and backups.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <div class="grid md:grid-cols-2 gap-12">
-        <div class="flex gap-6">
-          <i class="fa-solid fa-network-wired text-4xl text-green-500 mt-1"></i>
+    <section class="section" id="home-services" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="section-title">
           <div>
-            <h3 class="text-2xl font-semibold mb-3">Guest & Smart Device Separation</h3>
-            <p class="text-zinc-400">Keep visitors and IoT gadgets on their own network, away from your personal computers and sensitive data.</p>
+            <h2 id="services-title">Residential Services</h2>
+            <p>Home-first support: Wi‑Fi, devices, smart home, and home office reliability—with cybersecurity built in.</p>
           </div>
         </div>
-        <div class="flex gap-6">
-          <i class="fa-solid fa-user-shield text-4xl text-green-500 mt-1"></i>
-          <div>
-            <h3 class="text-2xl font-semibold mb-3">Account Protection</h3>
-            <p class="text-zinc-400">Enable multi-factor authentication on email, banking, shopping, and cloud accounts.</p>
-          </div>
-        </div>
-        <div class="flex gap-6">
-          <i class="fa-solid fa-arrows-rotate text-4xl text-green-500 mt-1"></i>
-          <div>
-            <h3 class="text-2xl font-semibold mb-3">Keep Everything Updated</h3>
-            <p class="text-zinc-400">Regular patching for routers, phones, tablets, TVs, and computers — closing the gaps scammers use.</p>
-          </div>
-        </div>
-        <div class="flex gap-6">
-          <i class="fa-solid fa-key text-4xl text-green-500 mt-1"></i>
-          <div>
-            <h3 class="text-2xl font-semibold mb-3">Safer Password Habits</h3>
-            <p class="text-zinc-400">Unique strong passphrases made easy with a password manager. No more reusing the same password everywhere.</p>
-          </div>
+
+        <div class="grid" role="list">
+          <article class="card" role="listitem">
+            <div class="pill">Wi‑Fi</div>
+            <h3>Whole‑Home Wi‑Fi</h3>
+            <p>Dead-zone fixes, mesh installs, optimal placement, and speed checks.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Router</div>
+            <h3>Secure Router Setup</h3>
+            <p>Firmware updates, WPA3, guest network, DNS safety, and admin lock-down.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Devices</div>
+            <h3>PC/Mac Tune‑Up</h3>
+            <p>Performance cleanup, updates, safer settings, and backup guidance.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Home Office</div>
+            <h3>Remote Work Setup</h3>
+            <p>Video-call reliability, printer/network fixes, and secure access guidance.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Smart Home</div>
+            <h3>Smart Home Organization</h3>
+            <p>Doorbells, cameras, assistants—clean setup with sensible separation.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Backups</div>
+            <h3>Backup &amp; Recovery</h3>
+            <p>Simple plans for family photos and important documents—tested.</p>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- How It Works -->
-  <section id="how" class="py-24 bg-white">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-      <h2 class="section-header font-semibold mb-6">How It Works</h2>
-      <p class="text-xl text-zinc-600 mb-16">Simple, transparent process from start to finish.</p>
-
-      <div class="grid md:grid-cols-4 gap-10">
-        <div class="text-left">
-          <div class="text-5xl font-bold text-blue-200 mb-4">01</div>
-          <h4 class="font-semibold text-xl mb-3">Tell Us What's Wrong</h4>
-          <p class="text-zinc-600">Wi-Fi issues, slow devices, smart home problems, or security concerns — describe it in your own words.</p>
-        </div>
-        <div class="text-left">
-          <div class="text-5xl font-bold text-blue-200 mb-4">02</div>
-          <h4 class="font-semibold text-xl mb-3">We Schedule & Quote</h4>
-          <p class="text-zinc-600">Quick response with available times and clear upfront pricing.</p>
-        </div>
-        <div class="text-left">
-          <div class="text-5xl font-bold text-blue-200 mb-4">03</div>
-          <h4 class="font-semibold text-xl mb-3">On-Site Visit</h4>
-          <p class="text-zinc-600">We come to your home, fix the issue properly, and explain everything in plain English.</p>
-        </div>
-        <div class="text-left">
-          <div class="text-5xl font-bold text-blue-200 mb-4">04</div>
-          <h4 class="font-semibold text-xl mb-3">Peace of Mind</h4>
-          <p class="text-zinc-600">Faster, more reliable, and more secure home tech — with tips to keep it that way.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Booking -->
-  <section id="book" class="py-24 bg-zinc-100">
-    <div class="max-w-2xl mx-auto px-6">
-      <div class="text-center mb-12">
-        <h2 class="section-header font-semibold">Book a Residential Visit</h2>
-        <p class="mt-4 text-lg text-zinc-600">We'll reply fast with scheduling options and a clear estimate.</p>
-      </div>
-
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="bg-white p-10 md:p-12 rounded-3xl shadow">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section class="section" id="security" aria-labelledby="security-title">
+      <div class="wrap">
+        <div class="section-title">
           <div>
-            <label class="block text-sm font-medium mb-2">Your Name</label>
-            <input type="text" name="name" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-2">Phone</label>
-            <input type="tel" name="phone" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+            <h2 id="security-title">Home Cybersecurity (Plain English)</h2>
+            <p>Security that fits real households—without breaking your apps or devices.</p>
           </div>
         </div>
-        <div class="mt-6">
-          <label class="block text-sm font-medium mb-2">Email</label>
-          <input type="email" name="email" required class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+
+        <div class="grid" role="list">
+          <article class="card" role="listitem">
+            <div class="pill">Wi‑Fi safety</div>
+            <h3>Guest &amp; smart-device separation</h3>
+            <p>Keep guests/IoT away from your personal computers and sensitive accounts.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Accounts</div>
+            <h3>MFA on important logins</h3>
+            <p>Protect email, banking, shopping, and cloud accounts with multi-factor authentication.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Updates</div>
+            <h3>Patch what you own</h3>
+            <p>Router, phones, tablets, PCs, TVs—updates close the holes scammers use.</p>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="pill">Family</div>
+            <h3>Safer passwords</h3>
+            <p>Use unique passwords (or passphrases). A password manager can make it easy.</p>
+          </article>
         </div>
-        <div class="mt-6">
-          <label class="block text-sm font-medium mb-2">Your City / Area in Texas</label>
-          <input type="text" name="location" placeholder="e.g. Eastland, Abilene, Dallas, Houston..." class="w-full px-6 py-4 border border-zinc-300 rounded-2xl focus:border-blue-600 outline-none">
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact">
+        <div class="section-title">
+          <div>
+            <h2 id="contact-title">Book a Residential Visit</h2>
+            <p>Tell us what's going on (Wi‑Fi, devices, smart home). We'll confirm timing and next steps.</p>
+          </div>
         </div>
-        <div class="mt-6">
-          <label class="block text-sm font-medium mb-2">What's going on? (Be as detailed as you like)</label>
-          <textarea name="message" rows="6" placeholder="Wi-Fi is weak upstairs... Smart doorbell keeps going offline..." class="w-full px-6 py-4 border border-zinc-300 rounded-3xl focus:border-blue-600 outline-none resize-y"></textarea>
+
+        <!-- Front-end form posts to Google Script. Real security requires server-side validation + CSRF protection + rate limiting. -->
+        <form id="contactForm" method="POST" autocomplete="on">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required maxlength="80" />
+          </div>
+
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30" placeholder="(555) 555‑5555" />
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required maxlength="120" />
+          </div>
+
+          <div>
+            <label for="service">What do you need help with?</label>
+            <select id="service" name="service" required>
+              <option value="" selected disabled>Select one…</option>
+              <option>Wi‑Fi / dead zones</option>
+              <option>New router / secure setup</option>
+              <option>PC/Mac cleanup</option>
+              <option>Smart home setup</option>
+              <option>Backup / photos</option>
+              <option>Password / account security</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="details">Details</label>
+            <textarea id="details" name="details" placeholder="Example: home size, provider, router model (if known), what's not working, best times…" maxlength="1200"></textarea>
+            <div class="hint">
+              Security tip: don't submit passwords, account recovery codes, or sensitive personal info here.
+            </div>
+          </div>
+
+          <div class="full" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+            <span class="hint">We'll reply with scheduling and an estimate.</span>
+            <button class="btn primary" type="submit" id="submitBtn">Request booking</button>
+          </div>
+        </form>
+
+        <div class="contact-alt">
+          <p>Prefer to reach out directly?</p>
+          <a href="tel:+1XXXXXXXXXX">📞 Call or text us</a>
         </div>
+      </div>
+    </section>
+  </main>
 
-        <p class="text-xs text-zinc-500 mt-6 mb-8">
-          Security note: Do not send passwords, recovery codes, or sensitive info. We will never ask for them through the form or email.
-        </p>
-
-        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white py-5 rounded-2xl text-lg font-semibold">
-          Send My Request
-        </button>
-      </form>
-
-      <p class="text-center mt-10 text-zinc-600">
-        Prefer to talk? Call or text: <strong>[Add Your Phone Number Here]</strong>
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-zinc-900 text-zinc-400 py-16">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-2xl font-semibold text-white mb-2">Texan Support & Solutions</p>
-      <p class="mb-8">Local residential IT support and home cybersecurity across Texas</p>
-      <p class="text-sm">© 2026 Texan Support & Solutions. All rights reserved.</p>
+  <footer>
+    <div class="wrap">
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+        <span>© 2026 Texan Support &amp; Solutions. All rights reserved.</span>
+        <span>Residential IT • Home Cybersecurity • Texas</span>
+      </div>
     </div>
   </footer>
 
+  <script>
+    // Hamburger menu toggle
+    (function () {
+      const btn = document.querySelector('.hamburger');
+      const menu = document.getElementById('navMenu');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', String(!expanded));
+        menu.classList.toggle('open');
+      });
+    })();
+
+    // Form submission handler for Google Sheets
+    // Replace SCRIPT_URL with your actual Google Apps Script deployment URL
+    (function () {
+      const form = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('submitBtn');
+      if (!form || !submitBtn) return;
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        
+        const SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/usercallable';
+        
+        const formData = new FormData(form);
+        const data = {
+          name: formData.get('name'),
+          phone: formData.get('phone'),
+          email: formData.get('email'),
+          service: formData.get('service'),
+          details: formData.get('details'),
+          timestamp: new Date().toISOString()
+        };
+
+        submitBtn.disabled = true;
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+
+        try {
+          const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(data)
+          });
+
+          form.reset();
+          submitBtn.textContent = '✓ Request sent!';
+          setTimeout(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          }, 3000);
+        } catch (error) {
+          console.error('Form submission error:', error);
+          submitBtn.textContent = 'Error sending. Please try again.';
+          submitBtn.disabled = false;
+          setTimeout(() => {
+            submitBtn.textContent = originalText;
+          }, 3000);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

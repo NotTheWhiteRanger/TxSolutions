@@ -6,7 +6,7 @@
     <title>Contact | Texan Support &amp; Solutions</title>
     <meta name="description" content="Contact Texan Support &amp; Solutions for residential tech support in Texas. Reach us by phone, email, or the form below." />
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
 
@@ -214,13 +214,58 @@
     </footer>
 
     <script>
-        function handleSubmit(e) {
+        // Paste your deployed Google Apps Script URL here:
+        var SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+        async function handleSubmit(e) {
             e.preventDefault();
 
-            // Security note: this demo form does not transmit data anywhere.
-            // If you later wire this up, ensure server-side validation, rate limiting, and CSRF protection.
-            alert("Thank you! Your message has been received. We'll contact you shortly.");
-            e.target.reset();
+            var btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = 'Sending… <i class="fa-solid fa-spinner fa-spin"></i>';
+
+            var name    = document.getElementById('name').value.trim();
+            var phone   = document.getElementById('phone').value.trim();
+            var email   = document.getElementById('email').value.trim();
+            var service = document.getElementById('service').value;
+            var message = document.getElementById('message').value.trim();
+
+            var fullMessage =
+                "Name: " + name +
+                "\nEmail: " + email +
+                "\nPhone: " + (phone || "Not provided") +
+                "\nService needed: " + service +
+                "\n\nDetails:\n" + message;
+
+            var params = new URLSearchParams({
+                name: name,
+                email: email,
+                phone: phone,
+                preferred: "email",
+                message: message,
+                fullMessage: fullMessage
+            });
+
+            try {
+                var res  = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: params.toString()
+                });
+                var text = await res.text();
+
+                if (text.trim().startsWith("Success")) {
+                    alert("Thank you! Your message has been received. We\u2019ll contact you shortly.");
+                    e.target.reset();
+                } else {
+                    alert("Something went wrong. Please try again or email us directly at Support@solutionstx.com");
+                }
+            } catch (err) {
+                alert("Could not send your message. Please email us at Support@solutionstx.com or call (254) 210-1117.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'SEND MESSAGE <i class="fa-solid fa-paper-plane"></i>';
+            }
         }
     </script>
 </body>

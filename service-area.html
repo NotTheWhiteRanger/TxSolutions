@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Area | Texan Support &amp; Solutions</title>
+    <meta name="description" content="Check if you're within our 75-mile service area around Eastland, TX. Texan Support &amp; Solutions provides residential tech support across central Texas." />
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://unpkg.com; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https://nominatim.openstreetmap.org; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; upgrade-insecure-requests" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self)" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .heading-font {
+            font-family: 'Playfair Display', sans-serif;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        .texas-star {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #b91c1c;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        #map {
+            height: 480px;
+            width: 100%;
+            border-radius: 1.5rem;
+            z-index: 0;
+        }
+
+        /* Keep leaflet popups below the sticky nav */
+        .leaflet-top {
+            z-index: 10 !important;
+        }
+
+        .status-badge {
+            transition: all 0.4s ease;
+        }
+
+        .pulse-green {
+            animation: pulseGreen 1.5s ease-out 1;
+        }
+
+        .pulse-red {
+            animation: pulseRed 1.5s ease-out 1;
+        }
+
+        @keyframes pulseGreen {
+            0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); }
+            70%  { box-shadow: 0 0 0 14px rgba(16,185,129,0); }
+            100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+        }
+
+        @keyframes pulseRed {
+            0%   { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+            70%  { box-shadow: 0 0 0 14px rgba(239,68,68,0); }
+            100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="Images/Logo.png" alt="Texan Support &amp; Solutions" class="h-11 w-auto" />
+                    <span class="text-2xl font-bold tracking-tight heading-font">Texan Support &amp; Solutions</span>
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="index.html#about" class="nav-link text-zinc-600 hover:text-zinc-900">About</a>
+                <a href="services.html" class="nav-link text-zinc-600 hover:text-zinc-900">Services</a>
+                <a href="why-us.html" class="nav-link text-zinc-600 hover:text-zinc-900">Why Us</a>
+                <a href="service-area.html" class="nav-link text-red-700 font-semibold">Service Area</a>
+                <a href="contact.html" class="nav-link text-zinc-600 hover:text-zinc-900">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <a href="tel:+12542101117"
+                   class="hidden sm:flex items-center gap-2 px-5 py-2.5 text-sm font-semibold border border-zinc-300 rounded-xl hover:bg-zinc-50">
+                    <i class="fa-solid fa-phone"></i>
+                    (254) 210-1117
+                </a>
+                <a href="contact.html"
+                   class="bg-red-700 hover:bg-red-800 transition-colors text-white px-6 py-3 rounded-2xl font-semibold text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    Get Support
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <header class="bg-zinc-900 text-white py-20">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="inline-block px-4 py-2 bg-red-700/20 text-red-400 text-sm font-semibold rounded-2xl mb-4">COVERAGE MAP</span>
+            <h1 class="text-5xl md:text-6xl heading-font font-bold leading-tight mb-6">
+                Do We Serve Your Area?
+            </h1>
+            <p class="text-xl text-zinc-300">
+                We currently serve customers within <strong class="text-white">75 miles of Eastland, TX</strong>.
+                Use the map below to check instantly.
+            </p>
+        </div>
+    </header>
+
+    <!-- Map + Controls Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-6">
+
+            <!-- Controls -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+                <!-- Detect Location Card -->
+                <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-6 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-700/10 text-red-700 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-location-crosshairs"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold">Use My Location</h2>
+                            <p class="text-sm text-zinc-500">Auto-detect via your browser</p>
+                        </div>
+                    </div>
+                    <button id="geoBtn" onclick="detectLocation()"
+                            class="w-full bg-red-700 hover:bg-red-800 transition-colors text-white py-3 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-location-arrow"></i>
+                        Detect My Location
+                    </button>
+                    <p id="geoError" class="text-xs text-red-500 hidden"></p>
+                </div>
+
+                <!-- Address/ZIP Card -->
+                <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-6 flex flex-col gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-red-700/10 text-red-700 rounded-xl flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-magnifying-glass-location"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-semibold">Check by Address or ZIP</h2>
+                            <p class="text-sm text-zinc-500">Type a city, address, or ZIP code</p>
+                        </div>
+                    </div>
+                    <form onsubmit="searchAddress(event)" class="flex gap-2">
+                        <input type="text" id="addressInput" placeholder="e.g. Abilene TX or 79601"
+                               maxlength="120"
+                               class="flex-1 px-4 py-3 bg-white border border-zinc-300 rounded-2xl text-sm focus:outline-none focus:border-red-500" />
+                        <button type="submit" id="searchBtn"
+                                class="bg-red-700 hover:bg-red-800 transition-colors text-white px-5 py-3 rounded-2xl font-semibold text-sm flex items-center gap-1.5 shrink-0">
+                            <i class="fa-solid fa-search"></i>
+                            Check
+                        </button>
+                    </form>
+                    <p id="addressError" class="text-xs text-red-500 hidden"></p>
+                </div>
+            </div>
+
+            <!-- Status Banner -->
+            <div id="statusBanner" class="hidden mb-6 rounded-3xl p-5 flex items-center gap-4 status-badge">
+                <div id="statusIcon" class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"></div>
+                <div>
+                    <p id="statusTitle" class="font-semibold text-lg"></p>
+                    <p id="statusDetail" class="text-sm mt-0.5"></p>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="rounded-3xl overflow-hidden border border-zinc-200 shadow-sm">
+                <div id="map"></div>
+            </div>
+
+            <p class="text-xs text-zinc-400 mt-3 text-center">
+                Map data © <a href="https://www.openstreetmap.org/copyright" class="underline hover:text-zinc-600" target="_blank" rel="noopener">OpenStreetMap</a> contributors
+            </p>
+        </div>
+    </section>
+
+    <!-- Out-of-Range Help -->
+    <section id="outOfRangeHelp" class="hidden py-16 bg-zinc-900 text-white">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <h2 class="text-3xl heading-font font-bold mb-4">Outside Our Current Range?</h2>
+            <p class="text-zinc-300 text-lg mb-6">
+                We're based in Eastland, TX and focus on customers within 75 miles so we can provide the
+                hands-on, reliable support you deserve. If you're just outside our range, reach out
+                anyway—we're happy to point you in the right direction or discuss remote options.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="contact.html"
+                   class="inline-flex items-center justify-center gap-2 bg-red-700 hover:bg-red-600 transition-colors text-white px-8 py-4 rounded-3xl font-semibold">
+                    Contact Us Anyway
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="tel:+12542101117"
+                   class="inline-flex items-center justify-center gap-2 border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white transition-colors px-8 py-4 rounded-3xl font-semibold">
+                    <i class="fa-solid fa-phone"></i>
+                    (254) 210-1117
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- In-Range CTA -->
+    <section id="inRangeCTA" class="hidden py-16 bg-emerald-50">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 text-3xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2 class="text-3xl heading-font font-bold mb-4 text-zinc-900">Great—You're in Our Area!</h2>
+            <p class="text-zinc-600 text-lg mb-6">
+                We can come to you. Tell us what's going on and we'll follow up quickly with honest, practical help.
+            </p>
+            <a href="contact.html"
+               class="inline-flex items-center gap-2 bg-red-700 hover:bg-red-800 transition-colors text-white px-10 py-4 rounded-3xl font-semibold text-lg">
+                Get Support Now
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-zinc-400 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="texas-star scale-75"></div>
+                    <span class="text-white font-semibold">Texan Support &amp; Solutions</span>
+                </div>
+
+                <div class="text-sm">
+                    © 2026 Texan Support &amp; Solutions. All rights reserved.<br>
+                    Proudly serving Texas from Eastland.
+                </div>
+
+                <div class="flex gap-6 text-2xl" aria-label="Social links">
+                    <a href="#" class="hover:text-white transition-colors" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="hover:text-white transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WPeE=" crossorigin="anonymous"></script>
+    <script>
+        // ─── Constants ───────────────────────────────────────────────
+        var SERVICE_LAT = 32.4007;  // Eastland, TX
+        var SERVICE_LNG = -98.8187;
+        var SERVICE_RADIUS_MILES = 75;
+        var SERVICE_RADIUS_METERS = SERVICE_RADIUS_MILES * 1609.344;
+
+        // ─── Haversine distance (returns miles) ──────────────────────
+        function haversineDistance(lat1, lon1, lat2, lon2) {
+            var R = 3958.8;
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        // ─── Map setup ───────────────────────────────────────────────
+        var map = L.map('map', { zoomControl: true }).setView([SERVICE_LAT, SERVICE_LNG], 7);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Service center marker
+        var centerMarker = L.marker([SERVICE_LAT, SERVICE_LNG], {
+            title: 'Eastland, TX – Service Center',
+            zIndexOffset: 1000
+        }).addTo(map);
+        centerMarker.bindPopup(
+            '<div style="text-align:center;padding:4px 2px">' +
+            '<strong>Eastland, TX</strong><br>' +
+            '<span style="color:#888;font-size:12px">Service Center</span>' +
+            '</div>'
+        );
+
+        // 75-mile service area circle
+        L.circle([SERVICE_LAT, SERVICE_LNG], {
+            radius: SERVICE_RADIUS_METERS,
+            color: '#b91c1c',
+            fillColor: '#b91c1c',
+            fillOpacity: 0.08,
+            weight: 2,
+            dashArray: '6 4'
+        }).addTo(map);
+
+        // User location marker (initially absent)
+        var userMarker = null;
+
+        // ─── Show status ─────────────────────────────────────────────
+        function showStatus(distanceMiles, locationName) {
+            var inRange = distanceMiles <= SERVICE_RADIUS_MILES;
+            var banner = document.getElementById('statusBanner');
+            var icon   = document.getElementById('statusIcon');
+            var title  = document.getElementById('statusTitle');
+            var detail = document.getElementById('statusDetail');
+
+            banner.classList.remove('hidden', 'bg-emerald-50', 'bg-red-50', 'border-emerald-200', 'border-red-200', 'pulse-green', 'pulse-red');
+
+            if (inRange) {
+                banner.classList.add('bg-emerald-50', 'border', 'border-emerald-200');
+                icon.className = 'w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 bg-emerald-100 text-emerald-600';
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                title.textContent = "You're in our service area!";
+                title.className = 'font-semibold text-lg text-emerald-800';
+                detail.textContent = locationName
+                    ? locationName + ' is about ' + distanceMiles.toFixed(1) + ' miles from Eastland, TX.'
+                    : 'About ' + distanceMiles.toFixed(1) + ' miles from Eastland, TX.';
+                detail.className = 'text-sm mt-0.5 text-emerald-700';
+                setTimeout(function() { banner.classList.add('pulse-green'); }, 10);
+
+                document.getElementById('inRangeCTA').classList.remove('hidden');
+                document.getElementById('outOfRangeHelp').classList.add('hidden');
+            } else {
+                banner.classList.add('bg-red-50', 'border', 'border-red-200');
+                icon.className = 'w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 bg-red-100 text-red-600';
+                icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+                title.textContent = "Outside our current service area";
+                title.className = 'font-semibold text-lg text-red-800';
+                detail.textContent = locationName
+                    ? locationName + ' is about ' + distanceMiles.toFixed(1) + ' miles from Eastland, TX (limit: ' + SERVICE_RADIUS_MILES + ' miles).'
+                    : 'About ' + distanceMiles.toFixed(1) + ' miles from Eastland, TX (limit: ' + SERVICE_RADIUS_MILES + ' miles).';
+                detail.className = 'text-sm mt-0.5 text-red-700';
+                setTimeout(function() { banner.classList.add('pulse-red'); }, 10);
+
+                document.getElementById('outOfRangeHelp').classList.remove('hidden');
+                document.getElementById('inRangeCTA').classList.add('hidden');
+            }
+
+            // Scroll the banner into view
+            banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ─── Place user marker & fit map ─────────────────────────────
+        function placeUserMarker(lat, lng, popupText) {
+            if (userMarker) { map.removeLayer(userMarker); }
+
+            var inRange = haversineDistance(SERVICE_LAT, SERVICE_LNG, lat, lng) <= SERVICE_RADIUS_MILES;
+
+            userMarker = L.circleMarker([lat, lng], {
+                radius: 10,
+                fillColor: inRange ? '#10b981' : '#ef4444',
+                color: inRange ? '#065f46' : '#991b1b',
+                weight: 2,
+                fillOpacity: 0.9
+            }).addTo(map);
+
+            if (popupText) {
+                userMarker.bindPopup(popupText).openPopup();
+            }
+
+            // Fit map to show both center and user point
+            var group = L.featureGroup([centerMarker, userMarker]);
+            map.fitBounds(group.getBounds().pad(0.25));
+        }
+
+        // ─── Geolocation ─────────────────────────────────────────────
+        function detectLocation() {
+            var btn = document.getElementById('geoBtn');
+            var errEl = document.getElementById('geoError');
+            errEl.classList.add('hidden');
+
+            if (!navigator.geolocation) {
+                errEl.textContent = 'Geolocation is not supported by your browser.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Detecting…';
+
+            navigator.geolocation.getCurrentPosition(
+                function(pos) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-location-arrow"></i> Detect My Location';
+
+                    var lat  = pos.coords.latitude;
+                    var lng  = pos.coords.longitude;
+                    var dist = haversineDistance(SERVICE_LAT, SERVICE_LNG, lat, lng);
+
+                    placeUserMarker(lat, lng, '<strong>Your Location</strong>');
+                    showStatus(dist, 'Your location');
+                },
+                function(err) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-location-arrow"></i> Detect My Location';
+
+                    var msg = 'Could not get your location.';
+                    if (err.code === 1) {
+                        msg = 'Location access was denied. Please allow it in your browser settings, or use the address lookup instead.';
+                    } else if (err.code === 2) {
+                        msg = 'Your position is currently unavailable. Try the address lookup instead.';
+                    }
+                    errEl.textContent = msg;
+                    errEl.classList.remove('hidden');
+                },
+                { timeout: 10000 }
+            );
+        }
+
+        // ─── Address / ZIP lookup (Nominatim) ────────────────────────
+        var lastSearchTime = 0;
+
+        function searchAddress(e) {
+            e.preventDefault();
+
+            var query  = document.getElementById('addressInput').value.trim();
+            var errEl  = document.getElementById('addressError');
+            var btn    = document.getElementById('searchBtn');
+            errEl.classList.add('hidden');
+
+            if (!query) {
+                errEl.textContent = 'Please enter a city, address, or ZIP code.';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            // Simple rate-limit: 1 request per 500 ms
+            var now = Date.now();
+            if (now - lastSearchTime < 500) { return; }
+            lastSearchTime = now;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+            var url = 'https://nominatim.openstreetmap.org/search?' +
+                      new URLSearchParams({
+                          q: query,
+                          format: 'json',
+                          limit: '1',
+                          countrycodes: 'us',
+                          addressdetails: '0'
+                      }).toString();
+
+            fetch(url, {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-search"></i> Check';
+
+                if (!data || data.length === 0) {
+                    errEl.textContent = 'Address not found. Try a city name or ZIP code (US only).';
+                    errEl.classList.remove('hidden');
+                    return;
+                }
+
+                var result = data[0];
+                var lat    = parseFloat(result.lat);
+                var lng    = parseFloat(result.lon);
+                var name   = result.display_name.split(',').slice(0, 2).join(',').trim();
+                var dist   = haversineDistance(SERVICE_LAT, SERVICE_LNG, lat, lng);
+
+                placeUserMarker(lat, lng,
+                    '<div style="max-width:180px"><strong>' + name + '</strong></div>'
+                );
+                showStatus(dist, name);
+            })
+            .catch(function() {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-search"></i> Check';
+                errEl.textContent = 'Lookup failed. Please check your connection and try again.';
+                errEl.classList.remove('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

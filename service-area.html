@@ -53,6 +53,13 @@
             z-index: 10 !important;
         }
 
+        /* Tailwind preflight sets max-width:100% and display:block on all
+           <img> elements, which breaks Leaflet tile positioning. Override it. */
+        .leaflet-container img {
+            max-width: none;
+            display: inline;
+        }
+
         .status-badge {
             transition: all 0.4s ease;
         }
@@ -317,6 +324,13 @@
         // User location marker (initially absent)
         var userMarker = null;
 
+        // Ensure the map renders correctly after the page fully loads
+        // (guards against edge cases where the container was not yet
+        // fully painted when Leaflet first measured its dimensions).
+        window.addEventListener('load', function() {
+            map.invalidateSize();
+        });
+
         // ─── Show status ─────────────────────────────────────────────
         function showStatus(distanceMiles, locationName) {
             var inRange = distanceMiles <= SERVICE_RADIUS_MILES;
@@ -465,12 +479,15 @@
             fetch(url, {
                 headers: { 'Accept': 'application/json' }
             })
-            .then(function(res) { return res.json(); })
+            .then(function(res) {
+                if (!res.ok) { throw new Error('HTTP ' + res.status); }
+                return res.json();
+            })
             .then(function(data) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-search"></i> Check';
 
-                if (!data || data.length === 0) {
+                if (!data || !Array.isArray(data) || data.length === 0) {
                     errEl.textContent = 'Address not found. Try a city name or ZIP code (US only).';
                     errEl.classList.remove('hidden');
                     return;
@@ -487,10 +504,14 @@
                 );
                 showStatus(dist, name);
             })
-            .catch(function() {
+            .catch(function(err) {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fa-solid fa-search"></i> Check';
-                errEl.textContent = 'Lookup failed. Please check your connection and try again.';
+                var msg = 'Lookup failed. Please check your connection and try again.';
+                if (err && err.message && err.message.indexOf('429') !== -1) {
+                    msg = 'Too many requests — please wait a moment and try again.';
+                }
+                errEl.textContent = msg;
                 errEl.classList.remove('hidden');
             });
         }
